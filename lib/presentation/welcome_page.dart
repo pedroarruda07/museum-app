@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover_page.dart';
+import 'package:ipm_project/presentation/scan_ticket_page.dart';
 
 class WelcomePage extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class WelcomePage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: ElevatedButton(
                       onPressed: ( ) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => QRViewExample()));
                       },
                       child: Text('Discover',
                         style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),

@@ -14,7 +14,7 @@ class DiscoverPage extends StatelessWidget {
           children: <Widget>[
             // Positioned Base image
             Positioned.fill(
-              child: Image.asset('assets/images/mapa.jpg', scale: 0.5, fit: BoxFit.cover),
+              child: Image.asset('assets/images/mapa.jpg', fit: BoxFit.cover),
             ),
             // Clickable area 1 (Top-Left quarter)
             Positioned(

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: Color.fromARGB(255, 196, 209, 214),  // This is the text color
+            backgroundColor: const Color.fromARGB(255, 196, 209, 214),  // This is the text color
             foregroundColor: Colors.black,  // This is the background color
           ),
         ),
