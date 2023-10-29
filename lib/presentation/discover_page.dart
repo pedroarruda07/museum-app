@@ -13,12 +13,8 @@ class DiscoverPage extends StatelessWidget {
           alignment: Alignment.center,
           children: <Widget>[
             // Positioned Base image
-            Positioned(
-              top: 10,
-              left: 25,
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.7,
-              child: Image.asset('assets/images/teste.jpg', scale: 0.5, fit: BoxFit.cover),
+            Positioned.fill(
+              child: Image.asset('assets/images/mapa.jpg', scale: 0.5, fit: BoxFit.cover),
             ),
             // Clickable area 1 (Top-Left quarter)
             Positioned(

@@ -14,6 +14,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Interactive Museum',
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Color.fromARGB(255, 196, 209, 214),  // This is the text color
+            foregroundColor: Colors.black,  // This is the background color
+          ),
+        ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),

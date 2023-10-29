@@ -6,51 +6,70 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset('assets/images/dino-logo.png',
-              scale: 1.25,
-              width: MediaQuery.of(context).size.width * 0.7,
-              //height: MediaQuery.of(context).size.height * 0.7,
+      body: Container(
+        width: double.infinity,  // Make sure the container takes the full width
+        height: double.infinity,  // Make sure the container takes the full height
+        child: Stack(
+          children: [
+            // Background Image
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/background.jpg',
+                fit: BoxFit.cover, // This is to make sure the image covers the entire container
               ),
-            SizedBox(height: 50.0),
-            Container(
-              width: MediaQuery.of(context).size.width * 0.6,
-              child: ElevatedButton(
-              onPressed: ( ) {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
-              },
-              child: Text('Discover',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
+            // Your original content
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Image.asset('assets/images/dino-logo.png',
+                    scale: 1.5,
+                    width: MediaQuery.of(context).size.width * 0.7,
+                  ),
+                  SizedBox(height: 70.0),
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: ElevatedButton(
+                      onPressed: ( ) {
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
+                      },
+                      child: Text('Discover',
+                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.0),  // Give some space between the buttons
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                      },
+                      child: Text('Buy Ticket',
+                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 30.0),  // Give some space between the buttons
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Handle button press
+                      },
+                      child: Text('Store',
+                        style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )),
-            SizedBox(height: 30.0),  // Give some space between the buttons
-            Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle button press
-                  },
-                  child: Text('Buy Ticket',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                )),
-            SizedBox(height: 30.0),  // Give some space between the buttons
-            Container(
-                width: MediaQuery.of(context).size.width * 0.6,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle button press
-                  },
-                  child: Text('Store',
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                )),
+            ),
           ],
         ),
       ),
     );
   }
+
 }
