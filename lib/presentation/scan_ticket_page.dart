@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:ipm_project/presentation/buyticket_page.dart';
+import 'package:ipm_project/presentation/discover_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class QRViewExample extends StatefulWidget {
@@ -11,13 +15,25 @@ class _QRViewExampleState extends State<QRViewExample> {
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
+  void reassemble() {
+    super.reassemble();
+    if (Platform.isAndroid) {
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
-        title: Text('Scan Ticket', style: TextStyle(color: Colors.white)),
+        title: const Text('Start Exploring',
+            style: TextStyle(color: Colors.white)),
+        centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -39,24 +55,23 @@ class _QRViewExampleState extends State<QRViewExample> {
                     cutOutSize: 300,
                   ),
                 ),
-                const Positioned(
-                  top: 100, // Adjust the position as per your requirement
-                  child: Text(
-                    'Natural History Museum',
+                Positioned(
+                  top: MediaQuery.of(context).size.height * 0.06, // Adjust the position as per your requirement
+                  child: const Text(
+                    'Scan QR Code',
                     style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 25,
                       color: Colors.white, // White text color for visibility
                     ),
                   ),
                 ),
                 Positioned(
-                  bottom: 100, // Adjust the position as per your requirement
+                  bottom: MediaQuery.of(context).size.height * 0.07, // Adjust the position as per your requirement
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                        maxWidth: 380), // Adjust the maxWidth as needed
+                        maxWidth: MediaQuery.of(context).size.width * 0.9), // Adjust the maxWidth as needed
                     child: Container(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 10), // Adds some padding
                       child: const Text(
                         'Point your camera at the QR Code available after presenting your ticket',
@@ -64,7 +79,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center, // Centers the text
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           color: Colors.white,
                         ),
                       ),
@@ -75,44 +90,20 @@ class _QRViewExampleState extends State<QRViewExample> {
             ),
           ),
           Container(
-            width: double.infinity,
-            color: Colors.black87, // Setting the background color
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Text(
-                    "Haven't bought a ticket yet?",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+              width: double.infinity,
+              color: Colors.black87, // Setting the background color
+              child: Container(
+                padding: const EdgeInsets.all(8.0), // Add some padding around the text
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
+                  },
+                  child: const Text(
+                    "Haven't bought a ticket yet?\n   Click here to buy tickets",
+                    style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 196, 209, 214)),
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Container(
-                      padding: EdgeInsets.all(
-                          8.0), // Add some padding around the text
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black, // Set the border color
-                          width: 2.0, // Set the border width
-                        ),
-                        borderRadius: BorderRadius.circular(
-                            4.0), // Optionally add a border radius
-                      ),
-                      child: TextButton(
-                        onPressed: () {
-                          // Link to the ticket buying page
-                        },
-                        child: Text(
-                          'Click here to buy tickets',
-                          style: TextStyle(
-                              fontSize: 18, color: Colors.white),
-                        ),
-                      ),
-                    ))
-              ],
-            ),
-          ),
+              ))
         ],
       ),
     );
@@ -121,10 +112,16 @@ class _QRViewExampleState extends State<QRViewExample> {
   void _onQRViewCreated(QRViewController controller) {
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        // Do something with the scanned data
-        print('QR Code Scanned: ${scanData.code}');
-      });
+      //print(scanData.code);
+      if (scanData.code == "StartMuseumVisit") {
+        // Navigate to the desired page
+        setState(() {
+          Navigator.of(context).replace(
+            oldRoute: ModalRoute.of(context)!,
+            newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
+          );
+        });
+      }
     });
   }
 
