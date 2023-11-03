@@ -64,7 +64,7 @@ class WelcomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         'Start Exploring',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 24, ),
                       ),
                     ),
                   ),
@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         'Book a Visit',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 24,),
                       ),
                     ),
                   ),
@@ -98,7 +98,7 @@ class WelcomePage extends StatelessWidget {
                       ),
                       child: const Text(
                         'Store',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(fontSize: 24, ),
                       ),
                     ),
                   ),
@@ -120,7 +120,7 @@ class WelcomePage extends StatelessWidget {
         fontWeight: FontWeight.bold,
         foreground: Paint()
           ..style = PaintingStyle.stroke
-          ..strokeWidth = 5
+          ..strokeWidth = 4
           ..color = Colors.black,
       ),
     );

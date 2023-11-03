@@ -30,10 +30,10 @@ class _QRViewExampleState extends State<QRViewExample> {
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: const Text('Start Exploring',
-            style: TextStyle(color: Colors.white)),
+            style: TextStyle(color: Color.fromARGB(255, 196, 209, 214))),
         centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 196, 209, 214)),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -52,7 +52,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                     borderRadius: 10,
                     borderLength: 30,
                     borderWidth: 10,
-                    cutOutSize: 300,
+                    cutOutSize: 250,
                   ),
                 ),
                 Positioned(
@@ -96,7 +96,13 @@ class _QRViewExampleState extends State<QRViewExample> {
                 padding: const EdgeInsets.all(8.0), // Add some padding around the text
                 child: TextButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
+                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
+
+                    //just for testing, rememebr to swap
+                    Navigator.of(context).replace(
+                      oldRoute: ModalRoute.of(context)!,
+                      newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
+                    );
                   },
                   child: const Text(
                     "Haven't bought a ticket yet?\n   Click here to buy tickets",

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ipm_project/presentation/camera_page.dart';
 
 class DiscoverPage extends StatelessWidget {
   @override
@@ -40,6 +41,7 @@ class DiscoverPage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   print("Bottom-Right area clicked!");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraApp()));
                 },
                 child: Container(
                   color: Colors.transparent,
