@@ -20,10 +20,9 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.black,  // This is the background color
           ),
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
       home: WelcomePage(),
+      //home: DiscoverPage(), //for faster debug of discover
     );
   }
 }

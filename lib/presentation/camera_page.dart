@@ -5,6 +5,7 @@ class CameraApp extends StatefulWidget {
   @override
   _CameraAppState createState() => _CameraAppState();
 }
+// TODO: Camera is not turning off after leaving the page
 
 class _CameraAppState extends State<CameraApp> {
   CameraController? _controller;
