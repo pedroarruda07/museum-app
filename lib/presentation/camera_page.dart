@@ -5,7 +5,7 @@ class CameraApp extends StatefulWidget {
   @override
   _CameraAppState createState() => _CameraAppState();
 }
-// TODO: Camera is not turning off after leaving the page
+// TODO: Camera is not turning off after leaving the page and asks for microphone permission(?)
 
 class _CameraAppState extends State<CameraApp> {
   CameraController? _controller;
@@ -53,10 +53,10 @@ class _CameraAppState extends State<CameraApp> {
       appBar: AppBar(
         backgroundColor: Colors.black54,
         title: const Text('Find The Item',
-            style: TextStyle(color: Color.fromARGB(255, 196, 209, 214))),
+            style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 196, 209, 214)),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -105,7 +105,7 @@ class _CameraAppState extends State<CameraApp> {
               ),
             ),
           ),
-          Align(
+          const Align(
             alignment: Alignment.topCenter,
             child: Padding(
               padding: const EdgeInsets.only(top: 25.0),
@@ -117,7 +117,7 @@ class _CameraAppState extends State<CameraApp> {
             child: Container( // Placeholder for the diamond image
               width: 150,
               height: 150,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage('assets/images/dino-logo.png'), // Replace with your diamond image path
                   fit: BoxFit.cover,

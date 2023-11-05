@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/camera_page.dart';
+import 'package:ipm_project/presentation/dinossaur_page.dart';
 
 class DiscoverPage extends StatelessWidget {
   @override
@@ -9,10 +10,10 @@ class DiscoverPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor:  Color.fromARGB(255, 30, 30, 30),
         title: const Text('Explore the Museum',
-            style: TextStyle(color: Color.fromARGB(255, 196, 209, 214))),
+            style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 196, 209, 214)),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -128,6 +129,7 @@ class DiscoverPage extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 1");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DinossaurPage()));
                 },
                 child: Container(
                   color: Colors.transparent,

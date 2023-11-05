@@ -30,10 +30,10 @@ class _QRViewExampleState extends State<QRViewExample> {
       appBar: AppBar(
         backgroundColor: Colors.black87,
         title: const Text('Start Exploring',
-            style: TextStyle(color: Color.fromARGB(255, 196, 209, 214))),
+            style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color.fromARGB(255, 196, 209, 214)),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -106,7 +106,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                   },
                   child: const Text(
                     "Haven't bought a ticket yet?\n   Click here to buy tickets",
-                    style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 196, 209, 214)),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ),
               ))
