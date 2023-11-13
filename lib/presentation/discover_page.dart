@@ -23,18 +23,18 @@ class DiscoverPage extends StatelessWidget {
           children: <Widget>[
             // Positioned Base image
             Positioned.fill(
-              child: Image.asset('assets/images/mapa.jpg', fit: BoxFit.fill),
+              child: Image.asset('assets/images/mapa1.jpg', fit: BoxFit.fill),
             ),
             Positioned(
-              top: 363,
-              right: 2,
+              top: MediaQuery.of(context).size.height * 0.351,
+              right: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 2");
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.08, // Use width to ensure the container is a circle
+                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -46,21 +46,21 @@ class DiscoverPage extends StatelessWidget {
                       ),
                     ],
                     color: Colors.black12, // Set to transparent or any other color
-                    shape: BoxShape.circle, // Set the shape to a circle
+                    shape: BoxShape.rectangle, // Set the shape to a circle
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 149,
-              right: 2,
+              top: MediaQuery.of(context).size.height * 0.145,
+              right: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 1");
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.08, // Use width to ensure the container is a circle
+                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -72,7 +72,7 @@ class DiscoverPage extends StatelessWidget {
                       ),
                     ],
                     color: Colors.black12, // Set to transparent or any other color
-                    shape: BoxShape.circle, // Set the shape to a circle
+                    shape: BoxShape.rectangle, // Set the shape to a circle
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ class DiscoverPage extends StatelessWidget {
               top: 0,
               right: 0,
               width: MediaQuery.of(context).size.width * 0.64,
-              height: MediaQuery.of(context).size.height * 0.137,
+              height: MediaQuery.of(context).size.height * 0.13,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 4");
@@ -92,10 +92,10 @@ class DiscoverPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 470,
+              top: MediaQuery.of(context).size.height * 0.208,
               right: 0,
               width: MediaQuery.of(context).size.width * 0.525,
-              height: MediaQuery.of(context).size.height * 0.127,
+              height: MediaQuery.of(context).size.height * 0.115,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 3");
@@ -107,10 +107,10 @@ class DiscoverPage extends StatelessWidget {
             ),
             // Clickable area 1 (Top-Left quarter)
             Positioned(
-              bottom: 100,
+              bottom: MediaQuery.of(context).size.height * 0.0925,
               left: 0,
               width: MediaQuery.of(context).size.width * 0.21,
-              height: MediaQuery.of(context).size.height * 0.365,
+              height: MediaQuery.of(context).size.height * 0.335,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 2");
@@ -122,10 +122,10 @@ class DiscoverPage extends StatelessWidget {
             ),
             // Clickable area 2 (Bottom-Right quarter)
             Positioned(
-              bottom: 100,
+              bottom: MediaQuery.of(context).size.height * 0.092,
               right: 0,
               width: MediaQuery.of(context).size.width * 0.295,
-              height: MediaQuery.of(context).size.height * 0.29,
+              height: MediaQuery.of(context).size.height * 0.265,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 1");
@@ -136,72 +136,6 @@ class DiscoverPage extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-                bottom: 15, // Adjust the value to your preference
-                left: 65, // Adjust the value to your preference
-                child: Container(
-                    width: 50, // Width of the white circle
-                    height: 50, // Height of the white circle
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.50),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset:
-                              const Offset(0, 0), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white, // White background color
-                      shape: BoxShape.circle, // Circular shape
-                    )
-                )
-            ),
-            Positioned(
-              bottom: 10, // You can adjust the value to your preference
-              left: 62.2, // You can adjust the value to your preference
-              child: IconButton(
-                icon: Icon(Icons.camera_alt), // Camera icon
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraApp()));
-                },
-                iconSize: 40.0, // You can adjust the size to your preference
-                color:
-                    Colors.black, // Choose a color that's visible on your map
-              ),
-            ),
-            Positioned(
-                bottom: 15, // Adjust the value to your preference
-                right: 65, // Adjust the value to your preference
-                child: Container(
-                    width: 50, // Width of the white circle
-                    height: 50, // Height of the white circle
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.50),
-                          spreadRadius: 5,
-                          blurRadius: 10,
-                          offset:
-                              const Offset(0, 0), // changes position of shadow
-                        ),
-                      ],
-                      color: Colors.white, // White background color
-                      shape: BoxShape.circle, // Circular shape
-                    ))),
-            Positioned(
-              bottom: 10, // You can adjust the value to your preference
-              right: 59, // You can adjust the value to your preference
-              child: IconButton(
-                icon: Icon(Icons.question_mark), // Camera icon
-                onPressed: () {
-                  // Add your button tap logic here, e.g., navigate to camera screen
-                },
-                iconSize: 45.0, // You can adjust the size to your preference
-                color:
-                    Colors.black, // Choose a color that's visible on your map
-              ),
-            ),
           ],
         ),
       ),
@@ -209,14 +143,39 @@ class DiscoverPage extends StatelessWidget {
         color: const Color.fromARGB(255, 30, 30, 30),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: TextFormField(
-            decoration: InputDecoration(
-              labelText: 'Search',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
+          child: Row(
+            children: <Widget>[
+              Expanded( // Expanded widget for the search bar
+                child: TextFormField(
+                  enabled: false,
+                  style: TextStyle(color: Colors.white), // Text color
+                  decoration: InputDecoration(
+                    labelText: 'Search',
+                    labelStyle: TextStyle(color: Colors.white), // Label text color
+                    prefixIcon: Icon(Icons.search, color: Colors.white), // Icon color
+                    disabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: Colors.white), // Border color
+                    ),
+                  ),
+                ),
               ),
-            ),
+              const SizedBox(width: 12.0),
+              IconButton(
+                icon: Icon(Icons.camera_alt), // Camera icon
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraApp()));
+                },
+                color: Colors.white, // Choose a color that's visible on your map
+              ),
+              IconButton(
+                icon: Icon(Icons.question_mark), // Camera icon
+                onPressed: () {
+                  // Add your button tap logic here, e.g., navigate to camera screen
+                },
+                color: Colors.white, // Choose a color that's visible on your map
+              ),
+            ],
           ),
         ),
       ),
