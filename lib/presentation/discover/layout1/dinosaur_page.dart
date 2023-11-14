@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/AR_page.dart';
+import 'package:ipm_project/presentation/discover/AR_page.dart';
 
 class DinossaurPage extends StatelessWidget {
   @override

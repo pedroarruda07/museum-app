@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/buyticket_page.dart';
+import 'package:ipm_project/presentation/book_visit/buyticket_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';

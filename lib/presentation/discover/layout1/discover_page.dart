@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/camera_page.dart';
+import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/quiz1_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';

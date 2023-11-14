@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/buyticket_page.dart';
+import 'package:ipm_project/presentation/book_visit/buyticket_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/scan_ticket_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
