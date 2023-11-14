@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/camera_page.dart';
-import 'package:ipm_project/presentation/dinossaur_page.dart';
+import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
+import 'package:ipm_project/presentation/welcome_page.dart';
 
-class DiscoverPage extends StatelessWidget {
+
+class Map2Page extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,8 +14,8 @@ class DiscoverPage extends StatelessWidget {
             style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.home, color: Colors.white),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => WelcomePage()))
         ),
       ),
       body: Center(
@@ -23,18 +24,19 @@ class DiscoverPage extends StatelessWidget {
           children: <Widget>[
             // Positioned Base image
             Positioned.fill(
-              child: Image.asset('assets/images/mapa1.jpg', fit: BoxFit.fill),
+              child: Image.asset('assets/images/mapa2.jpg', fit: BoxFit.fill),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.351,
-              right: MediaQuery.of(context).size.width * 0.005,
+              top: MediaQuery.of(context).size.height * 0.33,
+              left: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 2");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
+                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
+                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -52,15 +54,70 @@ class DiscoverPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.145,
-              right: MediaQuery.of(context).size.width * 0.005,
+              top: MediaQuery.of(context).size.height * 0.14,
+              left: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 1");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
+                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
+                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.30),
+                        spreadRadius: 5,
+                        blurRadius: 15,
+                        offset:
+                        const Offset(0, 0), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.black12, // Set to transparent or any other color
+                    shape: BoxShape.rectangle, // Set the shape to a circle
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              top: MediaQuery.of(context).size.height * 0.14,
+              right: MediaQuery.of(context).size.width * 0.005,
+              child: GestureDetector(
+                onTap: () {
+                  print("Clicked Arrow 3");
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
+                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.30),
+                        spreadRadius: 5,
+                        blurRadius: 15,
+                        offset:
+                        const Offset(0, 0), // changes position of shadow
+                      ),
+                    ],
+                    color: Colors.black12, // Set to transparent or any other color
+                    shape: BoxShape.rectangle, // Set the shape to a circle
+                  ),
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: MediaQuery.of(context).size.height * 0.165,
+              right: MediaQuery.of(context).size.width * 0.005,
+              child: GestureDetector(
+                onTap: () {
+                  print("Clicked Arrow 4");
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => DiscoverPage()));
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
+                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -80,8 +137,8 @@ class DiscoverPage extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              width: MediaQuery.of(context).size.width * 0.64,
-              height: MediaQuery.of(context).size.height * 0.13,
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.12,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 4");
@@ -92,10 +149,10 @@ class DiscoverPage extends StatelessWidget {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.208,
+              top: MediaQuery.of(context).size.height * 0.21,
               right: 0,
-              width: MediaQuery.of(context).size.width * 0.525,
-              height: MediaQuery.of(context).size.height * 0.115,
+              width: MediaQuery.of(context).size.width * 0.375,
+              height: MediaQuery.of(context).size.height * 0.3,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 3");
@@ -107,10 +164,10 @@ class DiscoverPage extends StatelessWidget {
             ),
             // Clickable area 1 (Top-Left quarter)
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.0925,
+              bottom: MediaQuery.of(context).size.height * 0.133,
               left: 0,
-              width: MediaQuery.of(context).size.width * 0.21,
-              height: MediaQuery.of(context).size.height * 0.335,
+              width: MediaQuery.of(context).size.width * 0.26,
+              height: MediaQuery.of(context).size.height * 0.235,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 2");
@@ -122,14 +179,14 @@ class DiscoverPage extends StatelessWidget {
             ),
             // Clickable area 2 (Bottom-Right quarter)
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.092,
+              bottom: 0,
               right: 0,
-              width: MediaQuery.of(context).size.width * 0.295,
-              height: MediaQuery.of(context).size.height * 0.265,
+              width: MediaQuery.of(context).size.width * 0.72,
+              height: MediaQuery.of(context).size.height * 0.13,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 1");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DinossaurPage()));
+                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => DinossaurPage()));
                 },
                 child: Container(
                   color: Colors.transparent,

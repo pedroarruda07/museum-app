@@ -2,8 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/buyticket_page.dart';
-import 'package:ipm_project/presentation/discover_page.dart';
+import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QRViewExample extends StatefulWidget {
   @override
@@ -22,6 +23,11 @@ class _QRViewExampleState extends State<QRViewExample> {
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
+  }
+
+  Future<void> _setTicketScanned() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('ticket', true);
   }
 
   @override
@@ -99,6 +105,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                     //Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
 
                     //just for testing, rememebr to swap
+                    _setTicketScanned();
                     Navigator.of(context).replace(
                       oldRoute: ModalRoute.of(context)!,
                       newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
@@ -122,6 +129,7 @@ class _QRViewExampleState extends State<QRViewExample> {
       if (scanData.code == "StartMuseumVisit") {
         // Navigate to the desired page
         setState(() {
+          _setTicketScanned();
           Navigator.of(context).replace(
             oldRoute: ModalRoute.of(context)!,
             newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),

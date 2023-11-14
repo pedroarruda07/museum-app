@@ -5,7 +5,6 @@ class CameraApp extends StatefulWidget {
   @override
   _CameraAppState createState() => _CameraAppState();
 }
-// TODO: Camera is not turning off after leaving the page and asks for microphone permission(?)
 
 class _CameraAppState extends State<CameraApp> {
   CameraController? _controller;
@@ -27,6 +26,7 @@ class _CameraAppState extends State<CameraApp> {
 
     // To create the CameraController.
     _controller = CameraController(
+      enableAudio: false,
       camera,
       ResolutionPreset.medium,
     );

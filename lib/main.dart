@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/discover_page.dart';
+import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,19 +13,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Interactive Museum',
-      theme: ThemeData(
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 196, 209, 214),  // This is the text color
-            foregroundColor: Colors.black,  // This is the background color
+    return ShowCaseWidget(builder: Builder(
+      builder: (context) => MaterialApp(
+        title: 'Interactive Museum',
+        theme: ThemeData(
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color.fromARGB(255, 196, 209, 214),  // This is the text color
+              foregroundColor: Colors.black,  // This is the background color
+            ),
           ),
         ),
-      ),
-      //home: WelcomePage(),
-      home: DiscoverPage(), //for faster debug of discover
-      debugShowCheckedModeBanner: false,
+        home: WelcomePage(),
+        //home: DiscoverPage()), //for faster debug of discover
+        debugShowCheckedModeBanner: false,
+      )
+    )
     );
   }
 }
