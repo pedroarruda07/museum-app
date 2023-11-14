@@ -81,7 +81,7 @@ class WelcomePage extends StatelessWidget {
                         side: MaterialStateProperty.all(const BorderSide(color: Colors.black, width: 3)), // Black outline
                       ),
                       child: const Text(
-                        'Start Exploring',
+                        'Explore',
                         style: TextStyle(fontSize: 20, ),
                       ),
                     ),

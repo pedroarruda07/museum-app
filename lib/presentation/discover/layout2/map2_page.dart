@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/camera_page.dart';
+import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
 
@@ -27,7 +27,7 @@ class Map2Page extends StatelessWidget {
               child: Image.asset('assets/images/mapa2.jpg', fit: BoxFit.fill),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.33,
+              top: MediaQuery.of(context).size.height * 0.34,
               left: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
@@ -108,7 +108,7 @@ class Map2Page extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.165,
+              bottom: MediaQuery.of(context).size.height * 0.17,
               right: MediaQuery.of(context).size.width * 0.005,
               child: GestureDetector(
                 onTap: () {
@@ -207,6 +207,7 @@ class Map2Page extends StatelessWidget {
                   enabled: false,
                   style: TextStyle(color: Colors.white), // Text color
                   decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     labelText: 'Search',
                     labelStyle: TextStyle(color: Colors.white), // Label text color
                     prefixIcon: Icon(Icons.search, color: Colors.white), // Icon color

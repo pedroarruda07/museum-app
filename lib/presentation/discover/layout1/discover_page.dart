@@ -57,12 +57,12 @@ class _MyDiscoverPage extends State<DiscoverPage> {
         backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
         title: Row(
           children: [
-            const SizedBox(width: 18),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.1,),
             const Text(
                 'Explore the Museum',
                 style: TextStyle(color: Colors.white)
             ),
-            const SizedBox(width: 35),
+            SizedBox(width: MediaQuery.of(context).size.width * 0.15,),
             IconButton(
               icon: const Icon(Icons.question_mark, color: Colors.white),
               onPressed: () async {
@@ -91,7 +91,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
             _buildCenteredShowcase(context, 'Throughout your journey different challenges will be available to you', _fourKey),
             _buildCenteredShowcase(context, 'Complete them to earn points and be able to unlock rewards at our store!', _fiveKey),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.351,
+              top: MediaQuery.of(context).size.height * 0.36,
               right: MediaQuery.of(context).size.width * 0.005,
               child: Showcase(
                 key: _threeKey,
@@ -104,7 +104,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
+                  height: MediaQuery.of(context).size.height * 0.05, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -131,7 +131,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.1, // Use width to ensure the container is a circle
+                  height: MediaQuery.of(context).size.height * 0.05, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
