@@ -55,25 +55,23 @@ class _MyDiscoverPage extends State<DiscoverPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
-        title: Row(
-          children: [
-            SizedBox(width: MediaQuery.of(context).size.width * 0.1,),
+        title:
             const Text(
-                'Explore the Museum',
-                style: TextStyle(color: Colors.white)
+              'Explore the Museum',
+              style: TextStyle(color: Colors.white),
             ),
-            SizedBox(width: MediaQuery.of(context).size.width * 0.15,),
-            IconButton(
-              icon: const Icon(Icons.question_mark, color: Colors.white),
-              onPressed: () async {
-                final SharedPreferences prefs = await SharedPreferences.getInstance();
-                await prefs.setBool('tutorial', false);
-                setState(() {});
-              },
-            ),
-          ],
-        ),
-        centerTitle: false, // This centers the title
+        actions: [
+          IconButton(
+           // alignment: Alignment.centerRight,
+            icon: const Icon(Icons.question_mark, color: Colors.white),
+            onPressed: () async {
+              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              await prefs.setBool('tutorial', false);
+              setState(() {});
+            },
+          ),
+        ],
+        centerTitle: true, // This centers the title
         leading: IconButton(
           icon: const Icon(Icons.home, color: Colors.white),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => WelcomePage()))
@@ -160,6 +158,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 4");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "tri")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -175,6 +174,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 3");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "tex")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -190,6 +190,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 2");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "long")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -205,7 +206,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Dinosaur 1");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DinossaurPage()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "velociraptor")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -255,7 +256,8 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 description: 'Here you can access the quiz challenges!\nThere is one for every section of the museum',
                 descriptionAlignment: TextAlign.center,
                 child: IconButton(
-                      icon: Icon(Icons.format_list_numbered_rounded), // Camera icon
+                      padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
+                      icon: Image.asset('assets/icons/quiz_icon.png',), // Camera icon
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizOnePage()));
                       },

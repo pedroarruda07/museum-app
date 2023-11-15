@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ipm_project/data/quiz_question.dart';
 
@@ -12,6 +14,15 @@ class _QuizPageState extends State<QuizOnePage> {
   String? selectedOption;
   bool isAnswerSelected = false;
   bool isCorrect = false;
+  Timer? _questionTimer;
+  static const int questionTimeLimit = 30; // 30 seconds for each question
+  int remainingTime = questionTimeLimit;
+
+  @override
+  void initState() {
+    super.initState();
+    _startQuestionTimer();
+  }
 
   List<QuizQuestion> sampleQuestions = [
     QuizQuestion(
@@ -24,7 +35,37 @@ class _QuizPageState extends State<QuizOnePage> {
       options: ["bird", "web browser", "mobile app SDK", "dance"],
       correctAnswer: "bird",
     ),
+    QuizQuestion(
+      question: "Twitter?",
+      options: ["ird", "wb browser", "moile app SD", "dnce"],
+      correctAnswer: "bird",
+    ),
   ];
+
+  void _startQuestionTimer() {
+    _questionTimer?.cancel(); // Cancel any existing timer.
+    _questionTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (remainingTime > 0) {
+        setState(() {
+          remainingTime--;
+        });
+      } else {
+        timer.cancel();
+        _timeIsUp(); // Call this when the time is up.
+      }
+    });
+  }
+
+  void _timeIsUp() {
+    // Handle what happens when the time is up, e.g., move to next question
+    // or show a time's up message.
+    if (currentQuestionIndex < sampleQuestions.length - 1) {
+      _goToNextQuestion();
+    } else {
+      // End of quiz logic
+      _showQuizCompletionDialog();
+    }
+  }
 
   void _checkAnswer(String option) {
     bool correct = sampleQuestions[currentQuestionIndex].correctAnswer == option;
@@ -33,24 +74,44 @@ class _QuizPageState extends State<QuizOnePage> {
       selectedOption = option;
       isCorrect = correct;
       isAnswerSelected = true;
+      remainingTime++;
+      if (correct) {
+        score++;
+      }
     });
-
-    if (correct) {
-      score++;
-    }
 
     Future.delayed(Duration(seconds: 2), () {
-      setState(() {
-        if (currentQuestionIndex < sampleQuestions.length - 1) {
+      if (currentQuestionIndex < sampleQuestions.length - 1) {
+        setState(() {
           currentQuestionIndex++;
           isAnswerSelected = false;
-        } else {
-          // Quiz is finished, show results
-          // You can navigate to a result page or display a dialog
-        }
-      });
+          remainingTime = questionTimeLimit;
+        });
+      } else {
+        // Handle quiz completion here
+        // For example, navigate to a result page or show a summary dialog
+        _showQuizCompletionDialog();
+      }
     });
   }
+
+  void _goToNextQuestion() {
+    // Logic to advance to the next question and reset timer
+    setState(() {
+      currentQuestionIndex++;
+      selectedOption = null;
+      isAnswerSelected = false;
+      remainingTime = questionTimeLimit; // Reset the time for the next question
+      _startQuestionTimer();
+    });
+  }
+
+  @override
+  void dispose() {
+    _questionTimer?.cancel(); // Always cancel the timer to avoid memory leaks
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +140,47 @@ class _QuizPageState extends State<QuizOnePage> {
       body: Align(
         alignment: Alignment.center,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
+            Row( children: [
+              SizedBox(width: MediaQuery.sizeOf(context).width * 0.15,),
+              Container(
+                height: MediaQuery.sizeOf(context).height * 0.025,
+                width: MediaQuery.sizeOf(context).width * 0.6,
+                child: LinearProgressIndicator(
+                  borderRadius: BorderRadius.circular(20),
+                  value: (currentQuestionIndex + (isAnswerSelected ? 1 : 0)) / sampleQuestions.length,
+                  backgroundColor: Colors.grey[300],
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                ),
+              ),
+              SizedBox(width: MediaQuery.sizeOf(context).width * 0.075,),
+                Stack(
+                alignment: Alignment.center,
+                children: [
+                  SizedBox(
+                    width: 50.0, // Size of the circular progress indicator
+                    height: 50.0,
+                    child: CircularProgressIndicator(
+                      value: 1 - remainingTime / 30, // Inverse the progress to decrease clockwise
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
+                      backgroundColor: Colors.blue,
+                      strokeWidth: 6, // Width of the progress indicator stroke
+                    ),
+                  ),
+                  Text(
+                    '$remainingTime', // Remaining time
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.grey[300], // Ensure the text color is visible on the progress indicator
+                    ),
+                  ),
+                ],
+              ),
+            ]),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.025,),
             Card(
               elevation: 5,
               child: Padding(
@@ -94,7 +194,8 @@ class _QuizPageState extends State<QuizOnePage> {
                 ),
               ),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50), // Reduced height for better layout
+            const SizedBox(height: 50),
             ...currentQuestion.options.map((option) {
               bool isOptionCorrect = option == sampleQuestions[currentQuestionIndex].correctAnswer;
               Color buttonColor = Colors.white; // Default color
@@ -108,11 +209,10 @@ class _QuizPageState extends State<QuizOnePage> {
                   buttonColor = Colors.green;
                 }
               }
-
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: SizedBox(
-                  width: double.infinity, // Makes the button expand to the full width
+                  width: MediaQuery.sizeOf(context).width * 0.9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: buttonColor,
@@ -128,6 +228,8 @@ class _QuizPageState extends State<QuizOnePage> {
                 ),
               );
             }).toList(),
+            SizedBox(height: MediaQuery.sizeOf(context).height * 0.075,),
+
           ],
         ),
       ),
@@ -136,13 +238,13 @@ class _QuizPageState extends State<QuizOnePage> {
   }
 
   Future<bool> _showExitPopup(BuildContext context) async {
-    bool shouldPop = false; // Default to not allowing the pop
+    bool shouldPop = false;
 
     await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          backgroundColor: Colors.grey[800],
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
           title: const Text('Are you sure you want to leave the quiz?', style: TextStyle(color: Colors.white),),
           content: const Text("Your progress will be lost and you won't be able to try again!", style: TextStyle(color: Colors.white),),
           actions: <Widget>[
@@ -166,5 +268,69 @@ class _QuizPageState extends State<QuizOnePage> {
 
     return shouldPop;
   }
-  
+
+  void _showQuizCompletionDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text(
+            "Quiz Completed!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Use minimum space
+            children: [
+              SizedBox(height: 10),
+              const Text(
+                "Your Score",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                  color: Colors.white
+                ),
+              ),
+              SizedBox(height: 10), // Spacing
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white, width: 2), // Square border
+                  borderRadius: BorderRadius.circular(4), // Slightly rounded corners
+                ),
+                child: Text(
+                  "${score*10}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20), // Spacing
+              Text("Quiz 1/4", style: TextStyle(color: Colors.white),), // Example quiz number
+            ],
+          ),
+          actions: [
+            Center(
+              child: TextButton(
+                child: Text("CONTINUE EXPLORING"),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
 }
