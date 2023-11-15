@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
+import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
+import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -310,15 +312,20 @@ class _MyMap2Page extends State<Map2Page> {
                 key: _sixKey,
                 description: 'Here you can access the quiz challenges!\nThere is one for every section of the museum',
                 descriptionAlignment: TextAlign.center,
-                child:IconButton(
+                child: IconButton(
                   padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
                   icon: Image.asset('assets/icons/quiz_icon.png',), // Camera icon
-                  onPressed: () {
-                    // Add your button tap logic here, e.g., navigate to camera screen
+                  onPressed: () async {
+                    if(await _checkIfQuizDone()){
+                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                      int score = prefs.getInt('scoreQuiz2') ?? 0;
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score)));
+                    } else Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizTwoPage()));
                   },
                   color: Colors.white, // Choose a color that's visible on your map
+                ),
               ),
-              )],
+            ],
           ),
         ),
       ),
@@ -338,6 +345,11 @@ class _MyMap2Page extends State<Map2Page> {
         // Other properties...
       ),
     );
+  }
+
+  Future<bool> _checkIfQuizDone() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('quiz2') ?? false;
   }
 
 }

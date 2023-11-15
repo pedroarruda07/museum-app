@@ -4,6 +4,7 @@ import 'package:ipm_project/presentation/discover/layout1/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/quiz1_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
+import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -258,12 +259,16 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 child: IconButton(
                       padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
                       icon: Image.asset('assets/icons/quiz_icon.png',), // Camera icon
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizOnePage()));
+                      onPressed: () async {
+                        if(await _checkIfQuizDone()){
+                          final SharedPreferences prefs = await SharedPreferences.getInstance();
+                          int score = prefs.getInt('scoreQuiz1') ?? 0;
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "1", score: score)));
+                        } else Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizOnePage()));
                       },
                       color: Colors.white, // Choose a color that's visible on your map
                       ),
-              )
+              ),
             ],
           ),
         ),
@@ -284,6 +289,11 @@ class _MyDiscoverPage extends State<DiscoverPage> {
         // Other properties...
       ),
     );
+  }
+
+  Future<bool> _checkIfQuizDone() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('quiz1') ?? false;
   }
 
 }

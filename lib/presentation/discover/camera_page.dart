@@ -49,9 +49,9 @@ class _CameraAppState extends State<CameraApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       appBar: AppBar(
-        backgroundColor: Colors.black54,
+        backgroundColor: const Color.fromARGB(255, 30, 30, 30),
         title: const Text('Find The Item',
             style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
