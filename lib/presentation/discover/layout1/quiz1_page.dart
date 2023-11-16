@@ -5,6 +5,8 @@ import 'package:ipm_project/data/quiz_question.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QuizOnePage extends StatefulWidget {
+  const QuizOnePage({super.key});
+
   @override
   _QuizPageState createState() => _QuizPageState();
 }
@@ -55,7 +57,7 @@ class _QuizPageState extends State<QuizOnePage> {
 
   void _startQuestionTimer() {
     _questionTimer?.cancel(); // Cancel any existing timer.
-    _questionTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
+    _questionTimer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       if (remainingTime > 0) {
         setState(() {
           remainingTime--;
@@ -91,7 +93,7 @@ class _QuizPageState extends State<QuizOnePage> {
       }
     });
 
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       if (currentQuestionIndex < sampleQuestions.length - 1) {
         setState(() {
           currentQuestionIndex++;
@@ -137,7 +139,7 @@ class _QuizPageState extends State<QuizOnePage> {
     child: Scaffold(
       backgroundColor: const Color.fromARGB(255, 30, 30, 30),
       appBar: AppBar(
-        title: Text('Quiz 1'),
+        title: const Text('Quiz 1'),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 30, 30),
         leading: IconButton(
@@ -155,18 +157,18 @@ class _QuizPageState extends State<QuizOnePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-              Container(
+              SizedBox(
                 height: MediaQuery.sizeOf(context).height * 0.025,
                 width: MediaQuery.sizeOf(context).width * 0.7,
                 child: LinearProgressIndicator(
                   borderRadius: BorderRadius.circular(20),
                   value: (currentQuestionIndex + (isAnswerSelected ? 1 : 0)) / sampleQuestions.length,
                   backgroundColor: Colors.grey[300],
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
                 ),
               ),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-            Container(
+            SizedBox(
               width: MediaQuery.sizeOf(context).width * 0.95, // Set the maximum width here
               child: Card(
                 elevation: 10,
@@ -228,9 +230,9 @@ class _QuizPageState extends State<QuizOnePage> {
                   width: MediaQuery.sizeOf(context).width * 0.9,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: buttonColor,
-                      textStyle: TextStyle(fontSize: 18),
-                      padding: EdgeInsets.symmetric(vertical: 12),
+                      backgroundColor: buttonColor,
+                      textStyle: const TextStyle(fontSize: 18),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20), // Adjust the corner radius
                       ),
@@ -240,7 +242,7 @@ class _QuizPageState extends State<QuizOnePage> {
                   ),
                 ),
               );
-            }).toList(),
+            }),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.075,),
 
           ],
@@ -262,13 +264,13 @@ class _QuizPageState extends State<QuizOnePage> {
           content: const Text("Your progress will be lost!", style: TextStyle(color: Colors.white),),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop(); // Dismiss the dialog
               },
             ),
             TextButton(
-              child: Text('Yes'),
+              child: const Text('Yes'),
               onPressed: () {
                 shouldPop = true;
                 Navigator.of(context).pop(); // Dismiss the dialog
@@ -324,7 +326,7 @@ class _QuizPageState extends State<QuizOnePage> {
           content: Column(
             mainAxisSize: MainAxisSize.min, // Use minimum space
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               const Text(
                 "Your Score",
                 style: TextStyle(
@@ -333,9 +335,9 @@ class _QuizPageState extends State<QuizOnePage> {
                   color: Colors.white
                 ),
               ),
-              SizedBox(height: 10), // Spacing
+              const SizedBox(height: 10), // Spacing
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white, width: 2), // Square border
                   borderRadius: BorderRadius.circular(4), // Slightly rounded corners
@@ -349,14 +351,14 @@ class _QuizPageState extends State<QuizOnePage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Spacing
-              Text("Quiz 1/4", style: TextStyle(color: Colors.white),), // Example quiz number
+              const SizedBox(height: 20), // Spacing
+              const Text("Quiz 1/4", style: TextStyle(color: Colors.white),), // Example quiz number
             ],
           ),
           actions: [
             Center(
               child: TextButton(
-                child: Text("CONTINUE EXPLORING"),
+                child: const Text("CONTINUE EXPLORING"),
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
                   Navigator.of(context).pop();

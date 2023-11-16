@@ -1,13 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/book_visit/buyticket_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/scan_ticket_page.dart';
+import 'package:ipm_project/presentation/store/store_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WelcomePage extends StatelessWidget {
+  const WelcomePage({super.key});
 
-  Future<bool> _checkIfTickerScanned() async {
+
+  Future<bool> _checkIfTicketScanned() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('ticket') ?? false;
   }
@@ -15,7 +17,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         width: double.infinity,  // Make sure the container takes the full width
         height: double.infinity,  // Make sure the container takes the full height
         child: Stack(
@@ -59,17 +61,17 @@ class WelcomePage extends StatelessWidget {
                     height: MediaQuery.of(context).size.height * 0.35,
                   ),
                   const SizedBox(height: 40.0),
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.053,
                     width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () async {
-                        if(!await _checkIfTickerScanned()) {
+                        if(!await _checkIfTicketScanned()) {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => QRViewExample()));
+                              builder: (context) => const QRViewExample()));
                         } else {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DiscoverPage()));
+                              builder: (context) => const DiscoverPage()));
                         }
                       },
                       style: ButtonStyle(
@@ -87,12 +89,12 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30.0),  // Give some space between the buttons
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.053,
                     width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BuyTicketPage()));
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -109,12 +111,12 @@ class WelcomePage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30.0),  // Give some space between the buttons
-                  Container(
+                  SizedBox(
                     height: MediaQuery.of(context).size.height * 0.053,
                     width: MediaQuery.of(context).size.width * 0.65,
                     child: ElevatedButton(
                       onPressed: () {
-                        // Handle button press
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StorePage()));
                       },
                       style: ButtonStyle(
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -158,7 +160,7 @@ class WelcomePage extends StatelessWidget {
     return Text(
       text,
       textAlign: TextAlign.center,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 30,
         fontWeight: FontWeight.bold,
         color: Color.fromARGB(255, 196, 209, 214),
