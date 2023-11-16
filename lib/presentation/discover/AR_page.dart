@@ -10,21 +10,41 @@ import 'package:ar_flutter_plugin/datatypes/node_types.dart';
 import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
-import 'package:vector_math/vector_math_64.dart';
+import 'package:flutter/services.dart';
+import 'package:vector_math/vector_math_64.dart' as vectors;
 
-class ObjectGesturesWidget extends StatefulWidget {
-  const ObjectGesturesWidget({super.key});
+class AugmentedRealityPage extends StatefulWidget {
+  final String dinoType;
+  AugmentedRealityPage({Key? key, required this.dinoType}) : super(key: key);
   @override
-  _ObjectGesturesWidgetState createState() => _ObjectGesturesWidgetState();
+  _AugmentedRealityState createState() => _AugmentedRealityState();
 }
 
-class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
+class _AugmentedRealityState extends State<AugmentedRealityPage> {
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
 
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+
+  vectors.Vector3 scale = vectors.Vector3(0.2, 0.2, 0.2);
+  vectors.Vector3 position = vectors.Vector3(0.0, 0.0, 0.0);
+  vectors.Vector4 rotation = vectors.Vector4(1.0, 0.0, 0.0, 0.0);
+
+  @override
+  void initState(){
+
+    if (widget.dinoType == "tyrannosaur_fight") scale = vectors.Vector3(0.7, 0.7, 0.7);
+    if (widget.dinoType == "brachiosaurus_ar_card") scale = vectors.Vector3(2.0, 2.0, 2.0);
+    if (widget.dinoType == "mosasaurus%20(1)") rotation = vectors.Vector4(-1.0, 0.0, 0.0, 1.5);
+    if (widget.dinoType == "plesio") {
+      rotation = vectors.Vector4(-1.0, 0.0, 0.0, 1.5);
+      scale = vectors.Vector3(0.7, 0.7, 0.7);
+      position = vectors.Vector3(0.0, 0.5, 0.0);
+    }
+      super.initState();
+  }
 
   @override
   void dispose() {
@@ -36,7 +56,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Object Transformation Gestures'),
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text('Bring it to Life!'),
+          centerTitle: true,
         ),
         body: Container(
             child: Stack(children: [
@@ -50,11 +72,24 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                          primary: Colors.white),
                           onPressed: onRemoveEverything,
-                          child: const Text("Remove Everything")),
+                          child: Text("Reset")),
                     ]),
               )
             ])));
+  }
+
+  void updateARSession() {
+    arSessionManager!.onInitialize(
+      showFeaturePoints: false,
+      showPlanes: true, // use the updated state variable
+      customPlaneTexturePath: "assets/images/triangle.png",
+      showWorldOrigin: false,
+      handlePans: true,
+      handleRotation: true,
+    );
   }
 
   void onARViewCreated(
@@ -70,7 +105,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
       showFeaturePoints: false,
       showPlanes: true,
       customPlaneTexturePath: "assets/images/triangle.png",
-      showWorldOrigin: true,
+      showWorldOrigin: false,
       handlePans: true,
       handleRotation: true,
     );
@@ -89,9 +124,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
     /*nodes.forEach((node) {
       this.arObjectManager.removeNode(node);
     });*/
-    for (var anchor in anchors) {
-      arAnchorManager!.removeAnchor(anchor);
-    }
+    anchors.forEach((anchor) {
+      this.arAnchorManager!.removeAnchor(anchor);
+    });
     anchors = [];
   }
 
@@ -99,43 +134,45 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
       List<ARHitTestResult> hitTestResults) async {
     var singleHitTestResult = hitTestResults.firstWhere(
             (hitTestResult) => hitTestResult.type == ARHitTestResultType.plane);
-    var newAnchor =
-    ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
-    bool? didAddAnchor = await arAnchorManager!.addAnchor(newAnchor);
-    if (didAddAnchor!) {
-      anchors.add(newAnchor);
-      // Add note to anchor
-      var newNode = ARNode(
-          type: NodeType.webGLB,
-          uri:
-          "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-          scale: Vector3(0.2, 0.2, 0.2),
-          position: Vector3(0.0, 0.0, 0.0),
-          rotation: Vector4(1.0, 0.0, 0.0, 0.0));
-      bool? didAddNodeToAnchor =
-      await arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
-      if (didAddNodeToAnchor!) {
-        nodes.add(newNode);
+    if (singleHitTestResult != null) {
+      var newAnchor =
+      ARPlaneAnchor(transformation: singleHitTestResult.worldTransform);
+      bool? didAddAnchor = await this.arAnchorManager!.addAnchor(newAnchor);
+      if (didAddAnchor!) {
+        this.anchors.add(newAnchor);
+        // Add note to anchor
+        var newNode = ARNode(
+            type: NodeType.webGLB,
+            uri:
+            "https://github.com/pedroarruda60663/3d-Models/blob/main/${widget.dinoType}.glb?raw=true",
+            scale: scale,
+            position: position,
+            rotation: rotation);
+        bool? didAddNodeToAnchor =
+        await this.arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
+        if (didAddNodeToAnchor!) {
+          this.nodes.add(newNode);
+        } else {
+          this.arSessionManager!.onError("Adding Node to Anchor failed");
+        }
       } else {
-        arSessionManager!.onError("Adding Node to Anchor failed");
+        this.arSessionManager!.onError("Adding Anchor failed");
       }
-    } else {
-      arSessionManager!.onError("Adding Anchor failed");
     }
-    }
+  }
 
   onPanStarted(String nodeName) {
-    print("Started panning node $nodeName");
+    print("Started panning node " + nodeName);
   }
 
   onPanChanged(String nodeName) {
-    print("Continued panning node $nodeName");
+    print("Continued panning node " + nodeName);
   }
 
   onPanEnded(String nodeName, Matrix4 newTransform) {
-    print("Ended panning node $nodeName");
+    print("Ended panning node " + nodeName);
     final pannedNode =
-    nodes.firstWhere((element) => element.name == nodeName);
+    this.nodes.firstWhere((element) => element.name == nodeName);
 
     /*
     * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date
@@ -145,17 +182,17 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   }
 
   onRotationStarted(String nodeName) {
-    print("Started rotating node $nodeName");
+    print("Started rotating node " + nodeName);
   }
 
   onRotationChanged(String nodeName) {
-    print("Continued rotating node $nodeName");
+    print("Continued rotating node " + nodeName);
   }
 
   onRotationEnded(String nodeName, Matrix4 newTransform) {
-    print("Ended rotating node $nodeName");
+    print("Ended rotating node " + nodeName);
     final rotatedNode =
-    nodes.firstWhere((element) => element.name == nodeName);
+    this.nodes.firstWhere((element) => element.name == nodeName);
 
     /*
     * Uncomment the following command if you want to keep the transformations of the Flutter representations of the nodes up to date

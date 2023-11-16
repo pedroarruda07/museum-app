@@ -3,21 +3,39 @@ import 'package:ipm_project/presentation/discover/AR_page.dart';
 
 class DinosaurPage extends StatefulWidget {
   final String picture;
-  const DinosaurPage({super.key, required this.picture});
+  const DinosaurPage({Key? key, required this.picture}) : super(key: key);
   @override
   _DinossaurPage createState() => _DinossaurPage(picture);
 }
 
 class _DinossaurPage extends State<DinosaurPage> {
 
+  String dinoType = "";
   final String picture;
   _DinossaurPage(this.picture);
+
+  @override
+  void initState(){
+
+    switch(picture){
+      case "tri": dinoType = "triceratops_dinosaur"; break;
+      case "tex": dinoType = "tyrannosaur_fight"; break;
+      case "long": dinoType = "brachiosaurus_ar_card"; break;
+      case "velociraptor": dinoType = "velociraptor%20(1)"; break;
+      case "mos": dinoType = "mosasaurus%20(1)"; break;
+      case "pleio": dinoType = "plesio"; break;
+      case "squid": dinoType = "squid"; break;
+      case "espino": dinoType = "spinosaurus_animation"; break;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
+        backgroundColor:  Color.fromARGB(255, 30, 30, 30),
         title: const Text('Explore the Museum',
             style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
@@ -38,17 +56,17 @@ class _DinossaurPage extends State<DinosaurPage> {
               bottom: MediaQuery.of(context).size.height * 0.05, // Adjust this value to move the entire group
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const ObjectGesturesWidget()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AugmentedRealityPage(dinoType: dinoType,)));
                 },
                 child: Container(
-                padding: const EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed
+                padding: EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.5), // Black color with 25% opacity
                       spreadRadius: 5, // Spread radius
                       blurRadius: 10, // Blur radius
-                      offset: const Offset(0, 0), // Changes position of shadow
+                      offset: Offset(0, 0), // Changes position of shadow
                     ),
                   ],
                   shape: BoxShape.circle, // Circular shape
