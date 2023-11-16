@@ -10,8 +10,26 @@ class DinosaurPage extends StatefulWidget {
 
 class _DinossaurPage extends State<DinosaurPage> {
 
+  String dinoType = "";
   final String picture;
   _DinossaurPage(this.picture);
+
+  @override
+  void initState(){
+
+    switch(picture){
+      case "tri": dinoType = "triceratops_dinosaur"; break;
+      case "tex": dinoType = "tyrannosaur_fight"; break;
+      case "long": dinoType = "brachiosaurus_ar_card"; break;
+      case "velociraptor": dinoType = "velociraptor%20(1)"; break;
+      case "mos": dinoType = "mosasaurus%20(1)"; break;
+      case "pleio": dinoType = "plesio"; break;
+      case "squid": dinoType = "squid"; break;
+      case "espino": dinoType = "spinosaurus_animation"; break;
+    }
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +56,7 @@ class _DinossaurPage extends State<DinosaurPage> {
               bottom: MediaQuery.of(context).size.height * 0.05, // Adjust this value to move the entire group
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ObjectGesturesWidget()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AugmentedRealityPage(dinoType: dinoType,)));
                 },
                 child: Container(
                 padding: EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed

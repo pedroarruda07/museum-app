@@ -11,22 +11,40 @@ import 'package:ar_flutter_plugin/datatypes/hittest_result_types.dart';
 import 'package:ar_flutter_plugin/models/ar_node.dart';
 import 'package:ar_flutter_plugin/models/ar_hittest_result.dart';
 import 'package:flutter/services.dart';
-import 'package:vector_math/vector_math_64.dart';
-import 'dart:math';
+import 'package:vector_math/vector_math_64.dart' as vectors;
 
-class ObjectGesturesWidget extends StatefulWidget {
-  ObjectGesturesWidget({Key? key}) : super(key: key);
+class AugmentedRealityPage extends StatefulWidget {
+  final String dinoType;
+  AugmentedRealityPage({Key? key, required this.dinoType}) : super(key: key);
   @override
-  _ObjectGesturesWidgetState createState() => _ObjectGesturesWidgetState();
+  _AugmentedRealityState createState() => _AugmentedRealityState();
 }
 
-class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
+class _AugmentedRealityState extends State<AugmentedRealityPage> {
   ARSessionManager? arSessionManager;
   ARObjectManager? arObjectManager;
   ARAnchorManager? arAnchorManager;
 
   List<ARNode> nodes = [];
   List<ARAnchor> anchors = [];
+
+  vectors.Vector3 scale = vectors.Vector3(0.2, 0.2, 0.2);
+  vectors.Vector3 position = vectors.Vector3(0.0, 0.0, 0.0);
+  vectors.Vector4 rotation = vectors.Vector4(1.0, 0.0, 0.0, 0.0);
+
+  @override
+  void initState(){
+
+    if (widget.dinoType == "tyrannosaur_fight") scale = vectors.Vector3(0.7, 0.7, 0.7);
+    if (widget.dinoType == "brachiosaurus_ar_card") scale = vectors.Vector3(2.0, 2.0, 2.0);
+    if (widget.dinoType == "mosasaurus%20(1)") rotation = vectors.Vector4(-1.0, 0.0, 0.0, 1.5);
+    if (widget.dinoType == "plesio") {
+      rotation = vectors.Vector4(-1.0, 0.0, 0.0, 1.5);
+      scale = vectors.Vector3(0.7, 0.7, 0.7);
+      position = vectors.Vector3(0.0, 0.5, 0.0);
+    }
+      super.initState();
+  }
 
   @override
   void dispose() {
@@ -38,7 +56,9 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Object Transformation Gestures'),
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text('Bring it to Life!'),
+          centerTitle: true,
         ),
         body: Container(
             child: Stack(children: [
@@ -52,11 +72,24 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                          primary: Colors.white),
                           onPressed: onRemoveEverything,
-                          child: Text("Remove Everything")),
+                          child: Text("Reset")),
                     ]),
               )
             ])));
+  }
+
+  void updateARSession() {
+    arSessionManager!.onInitialize(
+      showFeaturePoints: false,
+      showPlanes: true, // use the updated state variable
+      customPlaneTexturePath: "assets/images/triangle.png",
+      showWorldOrigin: false,
+      handlePans: true,
+      handleRotation: true,
+    );
   }
 
   void onARViewCreated(
@@ -72,7 +105,7 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
       showFeaturePoints: false,
       showPlanes: true,
       customPlaneTexturePath: "assets/images/triangle.png",
-      showWorldOrigin: true,
+      showWorldOrigin: false,
       handlePans: true,
       handleRotation: true,
     );
@@ -111,10 +144,10 @@ class _ObjectGesturesWidgetState extends State<ObjectGesturesWidget> {
         var newNode = ARNode(
             type: NodeType.webGLB,
             uri:
-            "https://github.com/KhronosGroup/glTF-Sample-Models/raw/master/2.0/Duck/glTF-Binary/Duck.glb",
-            scale: Vector3(0.2, 0.2, 0.2),
-            position: Vector3(0.0, 0.0, 0.0),
-            rotation: Vector4(1.0, 0.0, 0.0, 0.0));
+            "https://github.com/pedroarruda60663/3d-Models/blob/main/${widget.dinoType}.glb?raw=true",
+            scale: scale,
+            position: position,
+            rotation: rotation);
         bool? didAddNodeToAnchor =
         await this.arObjectManager!.addNode(newNode, planeAnchor: newAnchor);
         if (didAddNodeToAnchor!) {
