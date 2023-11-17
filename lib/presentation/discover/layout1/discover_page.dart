@@ -99,7 +99,10 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 2");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Map2Page()));
+                  Navigator.of(context).replace(
+                    oldRoute: ModalRoute.of(context)!,
+                    newRoute: MaterialPageRoute(builder: (context) => Map2Page()),
+                  );
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
@@ -126,7 +129,10 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 1");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Map2Page()));
+                  Navigator.of(context).replace(
+                    oldRoute: ModalRoute.of(context)!,
+                    newRoute: MaterialPageRoute(builder: (context) => Map2Page()),
+                  );
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.1, // Specify the width
@@ -242,6 +248,9 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               const SizedBox(width: 12.0),
               Showcase(
                 key: _sevenKey,
+                onBarrierClick: () => Future.delayed(Duration(seconds: 1), () {itemPopup(context); }),
+                onTargetClick: () => Future.delayed(Duration(seconds: 1), () {itemPopup(context); }),
+                disposeOnTap: true,
                 description: 'Look for specific items and take a photo of them when you find them!',
                 descriptionAlignment: TextAlign.center,
                 child:IconButton(
@@ -294,6 +303,81 @@ class _MyDiscoverPage extends State<DiscoverPage> {
   Future<bool> _checkIfQuizDone() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('quiz1') ?? false;
+  }
+
+  Future<bool> _checkIfPopupShown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('popup1') ?? false;
+  }
+
+  void _setPopupShown(bool value) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('popup1', value);
+  }
+
+  void itemPopup(BuildContext context) async {
+
+    _checkIfPopupShown().then((popupShown) {
+      if(!popupShown) {
+        _setPopupShown(true);
+        showDialog(
+          barrierDismissible: false,
+          context: context,
+          builder: (BuildContext context) {
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)), // this right here
+              child: Container(
+                padding: EdgeInsets.all(15.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    const Text(
+                      "CHALLENGE!",
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 15.0),
+                    Image.asset('assets/diamond.png', height: 100),
+                    // Your diamond-shaped image asset
+                    SizedBox(height: 15.0),
+                    const Text(
+                      "Find the diamond in the picture and take a photo of it!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    SizedBox(height: 20.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Put your code here for what should happen when OK is tapped
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Put your code here for what should happen when Cancel is tapped
+                            Navigator.of(context).pop();
+                          },
+                          child: Icon(Icons.camera_alt), // Camera icon
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      }
+    });
   }
 
 }
