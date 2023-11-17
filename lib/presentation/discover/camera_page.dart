@@ -3,10 +3,13 @@ import 'package:camera/camera.dart';
 
 class CameraApp extends StatefulWidget {
   final String picture;
-  const CameraApp({super.key, required this.picture});
+  final Color color1;
+  final Color color2;
+  final Color color3;
+  const CameraApp({super.key, required this.picture, required this.color1, required this.color2, required this.color3});
 
   @override
-  _CameraAppState createState() => _CameraAppState(picture);
+  _CameraAppState createState() => _CameraAppState(picture, color1, color2, color3);
 }
 
 class _CameraAppState extends State<CameraApp> {
@@ -14,7 +17,10 @@ class _CameraAppState extends State<CameraApp> {
   List<CameraDescription>? _cameras;
   Future<void>? _initializeControllerFuture;
   final String picture;
-  _CameraAppState(this.picture);
+  final Color color1;
+  final Color color2;
+  final Color color3;
+  _CameraAppState(this.picture, this.color1, this.color2, this.color3);
 
   @override
   void initState() {
@@ -67,6 +73,19 @@ class _CameraAppState extends State<CameraApp> {
       ),
       body: Stack(
         children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  color1,
+                  color2, // Replace with your start color
+                  color3, // Replace with your end color
+                ],
+              ),
+            ),
+          ),
           Align(
             alignment: const Alignment(0, 0.3),
             child: SizedBox(

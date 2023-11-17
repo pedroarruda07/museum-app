@@ -157,6 +157,7 @@ class _QuizPageState extends State<QuizTwoPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
+            Color.fromARGB(255, 180, 175, 133),
             Color.fromARGB(255, 86, 170, 212),
             Color.fromARGB(255, 180, 175, 133),
           ],

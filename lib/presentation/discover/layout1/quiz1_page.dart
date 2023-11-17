@@ -168,6 +168,7 @@ class _QuizPageState extends State<QuizOnePage> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
+                    Color.fromARGB(255, 180, 175, 133),
                     Color.fromARGB(255, 130, 172, 121), // Replace with your start color
                     Color.fromARGB(255, 180, 175, 133), // Replace with your end color
                   ],

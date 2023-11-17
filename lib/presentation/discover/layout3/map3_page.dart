@@ -249,7 +249,8 @@ class _MyMap3Page extends State<Map3Page> {
                   child:IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page3item')));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page3item', color1: Color.fromARGB(255, 76, 94, 74),
+                          color2: Color.fromARGB(255, 193, 182, 161), color3: Color.fromARGB(255, 85, 105, 119))));
                 },
                 color: Colors.white, // Choose a color that's visible on your map
               )),
@@ -264,7 +265,8 @@ class _MyMap3Page extends State<Map3Page> {
                     if(await _checkIfQuizDone()){
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
                       int score = prefs.getInt('scoreQuiz3') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score, color1: Color.fromARGB(255, 76, 94, 74),
+                          color2: Color.fromARGB(255, 193, 182, 161), color3: Color.fromARGB(255, 85, 105, 119))));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizThreePage()));
                     }

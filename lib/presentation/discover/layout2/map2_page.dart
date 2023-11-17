@@ -325,7 +325,8 @@ class _MyMap2Page extends State<Map2Page> {
                   child:IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page2item')));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page2item', color1: Color.fromARGB(255, 180, 175, 133),
+                         color2: Color.fromARGB(255, 86, 170, 212), color3: Color.fromARGB(255, 180, 175, 133))));
                 },
                 color: Colors.white, // Choose a color that's visible on your map
               )),
@@ -340,7 +341,8 @@ class _MyMap2Page extends State<Map2Page> {
                     if(await _checkIfQuizDone()){
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
                       int score = prefs.getInt('scoreQuiz2') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score)));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score, color1: Color.fromARGB(255, 180, 175, 133),
+                          color2: Color.fromARGB(255, 86, 170, 212), color3: Color.fromARGB(255, 180, 175, 133))));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizTwoPage()));
                     }
@@ -405,6 +407,7 @@ class _MyMap2Page extends State<Map2Page> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
+                      Color.fromARGB(255, 180, 175, 133),
                       Color.fromARGB(255, 86, 170, 212), // Replace with your start color
                       Color.fromARGB(255, 180, 175, 133), // Replace with your end color
                     ],
