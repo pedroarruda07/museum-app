@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class QuizDonePage extends StatelessWidget {
-  late final int score;
-  late final String page;
+  final int score;
+  final String page;
 
-  QuizDonePage({required this.score, required this.page});
+  const QuizDonePage({super.key, required this.score, required this.page});
 
   @override
   Widget build(BuildContext context) {
@@ -46,31 +46,31 @@ class QuizDonePage extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white, width: 2),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Text(
                 "$score",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   color: Colors.white,
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Text("Quiz $page/4", style: TextStyle(color: Colors.white)),
+            const SizedBox(height: 20),
+            Text("Quiz $page/4", style: const TextStyle(color: Colors.white)),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.15,),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(primary: Colors.white),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("CONTINUE EXPLORING"),
+              child: const Text("CONTINUE EXPLORING"),
             ),
           ],
         ),

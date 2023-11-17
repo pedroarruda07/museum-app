@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
 class CameraApp extends StatefulWidget {
+  const CameraApp({super.key});
+
   @override
   _CameraAppState createState() => _CameraAppState();
 }
@@ -63,8 +65,8 @@ class _CameraAppState extends State<CameraApp> {
       body: Stack(
         children: [
           Align(
-            alignment: Alignment(0, 0.35),
-            child: Container(
+            alignment: const Alignment(0, 0.35),
+            child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8, // 60% of screen width
               height: MediaQuery.of(context).size.height * 0.4, // Make it square
               child: FutureBuilder<void>(
@@ -76,7 +78,7 @@ class _CameraAppState extends State<CameraApp> {
                         borderRadius: BorderRadius.circular(20.0),  // Make sure this matches the ClipRRect's borderRadius
                         boxShadow: [
                           BoxShadow(
-                            color: Color.fromARGB(255, 196, 209, 214).withOpacity(0.25),
+                            color: const Color.fromARGB(255, 196, 209, 214).withOpacity(0.25),
                             spreadRadius: 5,
                             blurRadius: 10,
                             offset: const Offset(0, 0), // changes position of shadow
@@ -89,7 +91,7 @@ class _CameraAppState extends State<CameraApp> {
                           alignment: Alignment.center,
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
-                            child: Container(
+                            child: SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height,
                               child: CameraPreview(_controller!),
@@ -99,7 +101,7 @@ class _CameraAppState extends State<CameraApp> {
                       ),
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                 },
               ),
@@ -108,12 +110,12 @@ class _CameraAppState extends State<CameraApp> {
           const Align(
             alignment: Alignment.topCenter,
             child: Padding(
-              padding: const EdgeInsets.only(top: 25.0),
+              padding: EdgeInsets.only(top: 25.0),
               child: Text('Find and Take a Photo of This Diamond', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 196, 209, 214))),
             ),
           ),
           Align(
-            alignment: Alignment(0, -0.75),
+            alignment: const Alignment(0, -0.75),
             child: Container( // Placeholder for the diamond image
               width: 150,
               height: 150,
@@ -130,7 +132,7 @@ class _CameraAppState extends State<CameraApp> {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 40.0),
               child: FloatingActionButton(
-                child: Icon(Icons.camera_alt),
+                child: const Icon(Icons.camera_alt),
                 onPressed: () async {
                   // TODO: Handle camera capture functionality
                 },

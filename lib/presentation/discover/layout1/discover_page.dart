@@ -9,6 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class DiscoverPage extends StatefulWidget {
+  const DiscoverPage({super.key});
+
   @override
   _MyDiscoverPage createState() => _MyDiscoverPage();
 }
@@ -75,7 +77,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
         centerTitle: true, // This centers the title
         leading: IconButton(
           icon: const Icon(Icons.home, color: Colors.white),
-          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => WelcomePage()))
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WelcomePage()))
         ),
       ),
       body: Center(
@@ -232,15 +234,15 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               Expanded( // Expanded widget for the search bar
                 child: TextFormField(
                   enabled: false,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: 'Search',
-                    labelStyle: TextStyle(color: Colors.white),
-                    prefixIcon: Icon(Icons.search, color: Colors.white),
+                    labelStyle: const TextStyle(color: Colors.white),
+                    prefixIcon: const Icon(Icons.search, color: Colors.white),
                     contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: BorderSide(color: Colors.white), // Border color
+                      borderSide: const BorderSide(color: Colors.white), // Border color
                     ),
                   ),
                 ),
@@ -254,9 +256,9 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 description: 'Look for specific items and take a photo of them when you find them!',
                 descriptionAlignment: TextAlign.center,
                 child:IconButton(
-                      icon: Icon(Icons.camera_alt), // Camera icon
+                      icon: const Icon(Icons.camera_alt), // Camera icon
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CameraApp()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp()));
                       },
                       color: Colors.white, // Choose a color that's visible on your map
                     ),
@@ -266,14 +268,16 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 description: 'Here you can access the quiz challenges!\nThere is one for every section of the museum',
                 descriptionAlignment: TextAlign.center,
                 child: IconButton(
-                      padding: EdgeInsets.fromLTRB(2, 2, 2, 2),
+                      padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
                       icon: Image.asset('assets/icons/quiz_icon.png',), // Camera icon
                       onPressed: () async {
                         if(await _checkIfQuizDone()){
                           final SharedPreferences prefs = await SharedPreferences.getInstance();
                           int score = prefs.getInt('scoreQuiz1') ?? 0;
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "1", score: score)));
-                        } else Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizOnePage()));
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizOnePage()));
+                        }
                       },
                       color: Colors.white, // Choose a color that's visible on your map
                       ),
@@ -294,7 +298,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
         title: text,
         titleAlignment: TextAlign.center,
         description: '',
-        child: Container(width: 0, height: 0), // Empty Container as a placeholder
+        child: const SizedBox(width: 0, height: 0), // Empty Container as a placeholder
         // Other properties...
       ),
     );
