@@ -17,9 +17,16 @@ class StorePage extends StatelessWidget {
         'assets/images/store_products/duck4.jpg',
         'assets/images/store_products/duck5.jpg'
       ],
+      information: [
+          "suitable for ages 3+",
+          "crate-style box packaging exclusive to the Museum",
+          "L12.5cm x H9cm x W10.5cm",
+          "180g",
+          "made from vinyl, PVC and water-based inks"
+      ],
       description:
           "The creative team at Tubbz have brilliantly captured the Jurassic Park's T. rex and transformed it into this new hybrid dinosaur-duck to add to your collection - or to start one.\n\n"
-          "They've also managed to capture the mini giant in its own crate-style packaging - exclusively available at the Museum - for safe transit to its destination.\n\n",
+          "They've also managed to capture the mini giant in its own crate-style packaging - exclusively available at the Museum - for safe transit to its destination.",
       price: 20.00,
       reviews: ['Good product', 'Excellent quality'],
     ),
@@ -29,12 +36,18 @@ class StorePage extends StatelessWidget {
         'assets/images/store_products/lamp1.jpg',
         'assets/images/store_products/lamp2.jpg',
         'assets/images/store_products/lamp3.jpg',
-        'assets/images/store_products/lamp4.jpg',
-        'assets/images/store_products/lamp5.jpg'
+        'assets/images/store_products/lamp4.jpg'
+      ],
+      information: [
+          "suitable for ages 3+",
+          "W25.5cm x H21cm x D8.5cm",
+          "480g",
+          "powered by 3 x AA batteries (not included) or micro USB cable (included)",
+          "desk/shelf lamp or wall mountable"
       ],
       description:
           "A great gift for the ultimate Jurassic Park fan, this 3D square-shaped moulded lamp features the instantly recognisable logo.\n\n"
-          "It can either be charged via a USB cable or battery powered and will look right at home on a desktop, among a jungle of plants on a shelf, mounted on the wall in a bedroom - or garden shed.\n\n",
+          "It can either be charged via a USB cable or battery powered and will look right at home on a desktop, among a jungle of plants on a shelf, mounted on the wall in a bedroom - or garden shed.",
       price: 20.00,
       reviews: ['Good product', 'Excellent quality'],
     ),

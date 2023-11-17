@@ -21,6 +21,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Product Details'),
+        backgroundColor: Colors.black87,
         // Add more app bar actions or icons if needed
       ),
       body: SingleChildScrollView(
@@ -76,7 +77,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             // Product Description
             Text(
               widget.product.description,
-              style: const TextStyle(fontSize: 16, color: Colors.grey),
+              style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 20),
             // Product Price
@@ -85,12 +86,47 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green),
             ),
             const SizedBox(height: 20),
-            // Add more sections for Reviews, Specifications, Buttons, etc.
-            // ...
+            // Product Specifications
+            if (widget.product.information != null && widget.product.information!.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Specifications',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  // Display specifications
+                  for (var spec in widget.product.information!)
+                    Text(
+                      '- $spec',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            // Product Reviews
+            if (widget.product.reviews != null && widget.product.reviews!.isNotEmpty)
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Reviews',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  // Display reviews
+                  for (var review in widget.product.reviews!)
+                    Text(
+                      '- $review',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  const SizedBox(height: 20),
+                ],
+              ),
           ],
         ),
       ),
     );
   }
 }
-
