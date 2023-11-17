@@ -2,16 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
 class CameraApp extends StatefulWidget {
-  const CameraApp({super.key});
+  final String picture;
+  const CameraApp({super.key, required this.picture});
 
   @override
-  _CameraAppState createState() => _CameraAppState();
+  _CameraAppState createState() => _CameraAppState(picture);
 }
 
 class _CameraAppState extends State<CameraApp> {
   CameraController? _controller;
   List<CameraDescription>? _cameras;
   Future<void>? _initializeControllerFuture;
+  final String picture;
+  _CameraAppState(this.picture);
 
   @override
   void initState() {
@@ -65,7 +68,7 @@ class _CameraAppState extends State<CameraApp> {
       body: Stack(
         children: [
           Align(
-            alignment: const Alignment(0, 0.35),
+            alignment: const Alignment(0, 0.3),
             child: SizedBox(
               width: MediaQuery.of(context).size.width * 0.8, // 60% of screen width
               height: MediaQuery.of(context).size.height * 0.4, // Make it square
@@ -111,17 +114,18 @@ class _CameraAppState extends State<CameraApp> {
             alignment: Alignment.topCenter,
             child: Padding(
               padding: EdgeInsets.only(top: 25.0),
-              child: Text('Find and Take a Photo of This Diamond', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Color.fromARGB(255, 196, 209, 214))),
+              child: Text('Find and Take a Photo of This Item', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, color: Colors.white)),
             ),
           ),
           Align(
-            alignment: const Alignment(0, -0.75),
+            alignment: const Alignment(0, -0.7),
             child: Container( // Placeholder for the diamond image
-              width: 150,
-              height: 150,
-              decoration: const BoxDecoration(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
                 image: DecorationImage(
-                  image: AssetImage('assets/images/dino-logo.png'), // Replace with your diamond image path
+                  image: AssetImage('assets/images/find_items/$picture.png'), // Replace with your diamond image path
                   fit: BoxFit.cover,
                 ),
               ),

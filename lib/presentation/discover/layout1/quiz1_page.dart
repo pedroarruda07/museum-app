@@ -40,7 +40,12 @@ class _QuizPageState extends State<QuizOnePage> {
     ),
     QuizQuestion(
       question: "O Triceratops é conhecido por que característica?",
-      options: ["Cabeça em forma de croa com chifres", "Pescoço bastante longo", "Enorme cauda", "Pequenas barbatanas"],
+      options: [
+        "Cabeça em forma de croa com chifres",
+        "Pescoço bastante longo",
+        "Enorme cauda",
+        "Pequenas barbatanas"
+      ],
       correctAnswer: "Cabeça em forma de croa com chifres",
     ),
     QuizQuestion(
@@ -50,7 +55,12 @@ class _QuizPageState extends State<QuizOnePage> {
     ),
     QuizQuestion(
       question: "Onde foi encontrado, em 2008, um crânio de um Velociraptor?",
-      options: ["Japão", "Mongólia Interior", "Portugal", "Estados Unidos da America"],
+      options: [
+        "Japão",
+        "Mongólia Interior",
+        "Portugal",
+        "Estados Unidos da America"
+      ],
       correctAnswer: "Mongólia Interior",
     ),
   ];
@@ -81,7 +91,8 @@ class _QuizPageState extends State<QuizOnePage> {
   }
 
   void _checkAnswer(String option) {
-    bool correct = sampleQuestions[currentQuestionIndex].correctAnswer == option;
+    bool correct =
+        sampleQuestions[currentQuestionIndex].correctAnswer == option;
 
     setState(() {
       selectedOption = option;
@@ -125,130 +136,166 @@ class _QuizPageState extends State<QuizOnePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     QuizQuestion currentQuestion = sampleQuestions[currentQuestionIndex];
 
     return WillPopScope(
-        onWillPop: () async {
-      final shouldPop = await _showExitPopup(context);
-      return shouldPop;
-    },
-    child: Scaffold(
-      backgroundColor: const Color.fromARGB(255, 30, 30, 30),
-      appBar: AppBar(
-        title: const Text('Quiz 1'),
-        centerTitle: true,
+      onWillPop: () async {
+        final shouldPop = await _showExitPopup(context);
+        return shouldPop;
+      },
+      child: Scaffold(
         backgroundColor: const Color.fromARGB(255, 30, 30, 30),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () async {
-            if (await _showExitPopup(context)) {
-              Navigator.of(context).pop();
-            }
-          },
+        appBar: AppBar(
+          title: const Text('Quiz 1'),
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () async {
+              if (await _showExitPopup(context)) {
+                Navigator.of(context).pop();
+              }
+            },
+          ),
         ),
-      ),
-      body: Align(
-        alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-              SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.025,
-                width: MediaQuery.sizeOf(context).width * 0.7,
-                child: LinearProgressIndicator(
-                  borderRadius: BorderRadius.circular(20),
-                  value: (currentQuestionIndex + (isAnswerSelected ? 1 : 0)) / sampleQuestions.length,
-                  backgroundColor: Colors.grey[300],
-                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.blue),
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color.fromARGB(255, 130, 172, 121), // Replace with your start color
+                    Color.fromARGB(255, 180, 175, 133), // Replace with your end color
+                  ],
                 ),
               ),
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-            SizedBox(
-              width: MediaQuery.sizeOf(context).width * 0.95, // Set the maximum width here
-              child: Card(
-                elevation: 10,
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    currentQuestion.question,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.05,
+                  ),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.025,
+                    width: MediaQuery.sizeOf(context).width * 0.7,
+                    child: LinearProgressIndicator(
+                      borderRadius: BorderRadius.circular(20),
+                      value:
+                          (currentQuestionIndex + (isAnswerSelected ? 1 : 0)) /
+                              sampleQuestions.length,
+                      backgroundColor: Colors.grey[300],
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.blue),
                     ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  width: 50.0, // Size of the circular progress indicator
-                  height: 50.0,
-                  child: CircularProgressIndicator(
-                    value: 1 - remainingTime / questionTimeLimit, // Inverse the progress to decrease clockwise
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
-                    backgroundColor: Colors.blue,
-                    strokeWidth: 6, // Width of the progress indicator stroke
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.05,
                   ),
-                ),
-                Text(
-                  '$remainingTime', // Remaining time
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: Colors.grey[300], // Ensure the text color is visible on the progress indicator
-                  ),
-                ),
-              ],
-            ),
-             // Reduced height for better layout
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.05,),
-            ...currentQuestion.options.map((option) {
-              bool isOptionCorrect = option == sampleQuestions[currentQuestionIndex].correctAnswer;
-              Color buttonColor = Colors.white; // Default color
-
-              if (isAnswerSelected) {
-                if (selectedOption == option) {
-                  // User's selected option
-                  buttonColor = isCorrect ? Colors.green : Colors.red;
-                } else if (isOptionCorrect) {
-                  // Correct option when the user's choice is wrong
-                  buttonColor = Colors.green;
-                }
-              }
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.9,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: buttonColor,
-                      textStyle: const TextStyle(fontSize: 18),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20), // Adjust the corner radius
+                  SizedBox(
+                    width: MediaQuery.sizeOf(context).width *
+                        0.95, // Set the maximum width here
+                    child: Card(
+                      elevation: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Text(
+                          currentQuestion.question,
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
-                    onPressed: !isAnswerSelected ? () => _checkAnswer(option) : () {},
-                    child: Text(option),
                   ),
-                ),
-              );
-            }),
-            SizedBox(height: MediaQuery.sizeOf(context).height * 0.075,),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.05,
+                  ),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 50.0, // Size of the circular progress indicator
+                        height: 50.0,
+                        child: CircularProgressIndicator(
+                          value: 1 -
+                              remainingTime /
+                                  questionTimeLimit, // Inverse the progress to decrease clockwise
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.grey[300]!),
+                          backgroundColor: Colors.blue,
+                          strokeWidth:
+                              6, // Width of the progress indicator stroke
+                        ),
+                      ),
+                      Text(
+                        '$remainingTime', // Remaining time
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Colors.grey[
+                              300], // Ensure the text color is visible on the progress indicator
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Reduced height for better layout
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.05,
+                  ),
+                  ...currentQuestion.options.map((option) {
+                    bool isOptionCorrect = option ==
+                        sampleQuestions[currentQuestionIndex].correctAnswer;
+                    Color buttonColor = Colors.white; // Default color
 
+                    if (isAnswerSelected) {
+                      if (selectedOption == option) {
+                        // User's selected option
+                        buttonColor = isCorrect ? Colors.green : Colors.red;
+                      } else if (isOptionCorrect) {
+                        // Correct option when the user's choice is wrong
+                        buttonColor = Colors.green;
+                      }
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: SizedBox(
+                        width: MediaQuery.sizeOf(context).width * 0.9,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: buttonColor,
+                            textStyle: const TextStyle(fontSize: 18),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  20), // Adjust the corner radius
+                            ),
+                          ),
+                          onPressed: !isAnswerSelected
+                              ? () => _checkAnswer(option)
+                              : () {},
+                          child: Text(option),
+                        ),
+                      ),
+                    );
+                  }),
+                  SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.075,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
-    )
     );
   }
 
@@ -260,8 +307,14 @@ class _QuizPageState extends State<QuizOnePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: const Color.fromARGB(255, 30, 30, 30),
-          title: const Text('Are you sure you want to leave the quiz?', style: TextStyle(color: Colors.white),),
-          content: const Text("Your progress will be lost!", style: TextStyle(color: Colors.white),),
+          title: const Text(
+            'Are you sure you want to leave the quiz?',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: const Text(
+            "Your progress will be lost!",
+            style: TextStyle(color: Colors.white),
+          ),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancel'),
@@ -296,13 +349,12 @@ class _QuizPageState extends State<QuizOnePage> {
     int existingScore = prefs.getInt('score') ?? 0;
 
     // Calculate the new total score by adding the current quiz score
-    int totalScore = existingScore + quizScore*10;
+    int totalScore = existingScore + quizScore * 10;
 
     // Save the updated total score back to SharedPreferences
     await prefs.setInt('score', totalScore);
-    await prefs.setInt('scoreQuiz1', score*10);
+    await prefs.setInt('scoreQuiz1', score * 10);
   }
-
 
   Future<void> _showQuizCompletionDialog() async {
     _setScore(score);
@@ -330,20 +382,21 @@ class _QuizPageState extends State<QuizOnePage> {
               const Text(
                 "Your Score",
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                  color: Colors.white
-                ),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white),
               ),
               const SizedBox(height: 10), // Spacing
               Container(
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 2), // Square border
-                  borderRadius: BorderRadius.circular(4), // Slightly rounded corners
+                  border: Border.all(
+                      color: Colors.white, width: 2), // Square border
+                  borderRadius:
+                      BorderRadius.circular(4), // Slightly rounded corners
                 ),
                 child: Text(
-                  "${score*10}",
+                  "${score * 10}",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -352,7 +405,10 @@ class _QuizPageState extends State<QuizOnePage> {
                 ),
               ),
               const SizedBox(height: 20), // Spacing
-              const Text("Quiz 1/4", style: TextStyle(color: Colors.white),), // Example quiz number
+              const Text(
+                "Quiz 1/3",
+                style: TextStyle(color: Colors.white),
+              ), // Example quiz number
             ],
           ),
           actions: [
@@ -370,6 +426,4 @@ class _QuizPageState extends State<QuizOnePage> {
       },
     );
   }
-
-
 }

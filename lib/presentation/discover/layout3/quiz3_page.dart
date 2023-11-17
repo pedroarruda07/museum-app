@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:ipm_project/data/quiz_question.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class QuizTwoPage extends StatefulWidget {
-  const QuizTwoPage({super.key});
+class QuizThreePage extends StatefulWidget {
+  const QuizThreePage({super.key});
 
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
-class _QuizPageState extends State<QuizTwoPage> {
+class _QuizPageState extends State<QuizThreePage> {
   int currentQuestionIndex = 0;
   int score = 0;
   String? selectedOption;
@@ -29,29 +29,29 @@ class _QuizPageState extends State<QuizTwoPage> {
 
   List<QuizQuestion> sampleQuestions = [
     QuizQuestion(
-      question: "O Mosasaurus era um tipo de que animal?",
-      options: ["Lagarto Marinho", "Baleia", "Tubarão", "Ave"],
-      correctAnswer: "Lagarto Marinho",
+      question: 'Quais são os três critérios principais para identificar minerais?',
+      options: ["Cor, peso, transparência", "Dureza, cor, brilho", "Brilho, densidade, forma", "Dureza, cor, clivagem"],
+      correctAnswer: "Dureza, cor, clivagem",
     ),
     QuizQuestion(
-      question: "Ao que se deveu a extinção do Cretáceo-Terciário (K-T), ",
-      options: ["Subida do nível dos oceanos", "Vulcanismo maciço", "Alterações climáticas", "A colisão de um asteróide com a Terra"],
-      correctAnswer: "A colisão de um asteróide com a Terra",
+      question: "Em que nível está o Topázio na escala de Mohs (Dureza)?",
+      options: ["5", "7", "8", "2"],
+      correctAnswer: "8",
     ),
     QuizQuestion(
-      question: "Qual é o maior invertebrado do planeta?",
-      options: ["Lula-Gigante", "Ostra gigante", "Lula-Colossal", "Caranguejo-aranha gigante"],
-      correctAnswer: "Lula-Colossal",
+      question: "Qual é considerada a pedra preciosa mais rara do mundo?",
+      options: ["Diamante Vermelho", "Painita", "Alexandrita", "Tanzanita"],
+      correctAnswer: "Painita",
     ),
     QuizQuestion(
-      question: 'Quem foi o "pai da evolução"?',
-      options: ["Darwin", "Einstein", "Galileu", "Newton"],
-      correctAnswer: "Darwin",
+      question: "Como se formam os diamantes naturalmente?",
+      options: ["Condensação de gases", "Resfriamento de magma", "Alta pressão e temperatura", "Precipitação química"],
+      correctAnswer: "Alta pressão e temperatura",
     ),
     QuizQuestion(
-      question: "De que se alimentavam os Espinossauros?",
-      options: ["Insetos", "Mamíferos", "Plantas", "Peixes"],
-      correctAnswer: "Peixes",
+      question: "As pérolas são consideradas pedras preciosas? Por quê?",
+      options: ["Sim, são minerais", "Não, são orgânicas", "Sim, são cristais", "Não, são rochas"],
+      correctAnswer: "Não, são orgânicas",
     ),
   ];
 
@@ -157,8 +157,9 @@ class _QuizPageState extends State<QuizTwoPage> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            Color.fromARGB(255, 86, 170, 212),
-            Color.fromARGB(255, 180, 175, 133),
+            Color.fromARGB(255, 76, 94, 74),
+            Color.fromARGB(255, 193, 182, 161),
+            Color.fromARGB(255, 85, 105, 119),
           ],
         ),
       ),
@@ -300,7 +301,7 @@ class _QuizPageState extends State<QuizTwoPage> {
 
   Future<void> _setQuizDone() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('quiz2', true);
+    await prefs.setBool('quiz3', true);
   }
 
   Future<void> _setScore(int quizScore) async {
@@ -314,7 +315,7 @@ class _QuizPageState extends State<QuizTwoPage> {
 
     // Save the updated total score back to SharedPreferences
     await prefs.setInt('score', totalScore);
-    await prefs.setInt('scoreQuiz2', score*10);
+    await prefs.setInt('scoreQuiz3', score*10);
   }
 
 
@@ -367,7 +368,7 @@ class _QuizPageState extends State<QuizTwoPage> {
                 ),
               ),
               const SizedBox(height: 20), // Spacing
-              const Text("Quiz 2/3", style: TextStyle(color: Colors.white),), // Example quiz number
+              const Text("Quiz 3/3", style: TextStyle(color: Colors.white),), // Example quiz number
             ],
           ),
           actions: [

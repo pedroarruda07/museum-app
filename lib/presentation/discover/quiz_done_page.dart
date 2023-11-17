@@ -63,7 +63,7 @@ class QuizDonePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-            Text("Quiz $page/4", style: const TextStyle(color: Colors.white)),
+            Text("Quiz $page/3", style: const TextStyle(color: Colors.white)),
             SizedBox(height: MediaQuery.sizeOf(context).height * 0.15,),
             ElevatedButton(
               style: ElevatedButton.styleFrom(backgroundColor: Colors.white),

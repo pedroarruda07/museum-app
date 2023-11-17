@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
-import 'package:ipm_project/presentation/discover/layout1/dinosaur_page.dart';
+import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/quiz1_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
@@ -23,7 +23,6 @@ class _MyDiscoverPage extends State<DiscoverPage> {
   final GlobalKey _fiveKey = GlobalKey();
   final GlobalKey _sixKey = GlobalKey();
   final GlobalKey _sevenKey = GlobalKey();
-  final GlobalKey _eightKey = GlobalKey();
 
   Future<bool> _checkIfTutorialShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,7 +47,6 @@ class _MyDiscoverPage extends State<DiscoverPage> {
             _fiveKey,
             _sixKey,
             _sevenKey,
-            _eightKey,
           ]);
           _setTutorialShown();
         });
@@ -258,7 +256,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                 child:IconButton(
                       icon: const Icon(Icons.camera_alt), // Camera icon
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page1find')));
                       },
                       color: Colors.white, // Choose a color that's visible on your map
                     ),
@@ -320,7 +318,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
   }
 
   void itemPopup(BuildContext context) async {
-
+    _setPopupShown(false);
     _checkIfPopupShown().then((popupShown) {
       if(!popupShown) {
         _setPopupShown(true);
@@ -334,7 +332,14 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               child: Container(
                 padding: EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color.fromARGB(255, 130, 172, 121), // Replace with your start color
+                      Color.fromARGB(255, 180, 175, 133), // Replace with your end color
+                    ],
+                  ),
                   borderRadius: BorderRadius.circular(12.0),
                 ),
                 child: Column(
@@ -346,34 +351,47 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(height: 15.0),
-                    Image.asset('assets/diamond.png', height: 100),
-                    // Your diamond-shaped image asset
+                    Container(
+                      decoration: BoxDecoration(
+                        // Rounded corners
+                        borderRadius: BorderRadius.circular(10), // Adjust radius to your preference
+                        // Optional: Add a border, shadow, etc.
+                      ),
+                      clipBehavior: Clip.antiAlias, // Ensures the image is clipped to the border radius
+                      child: Image.asset('assets/images/find_items/page1find.png', height: 100),
+                    ),
                     SizedBox(height: 15.0),
                     const Text(
-                      "Find the diamond in the picture and take a photo of it!",
+                      "Find the item in the picture and take a photo of it to earn 50 points!",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.0),
                     ),
+                    SizedBox(height: 15.0),
+                    const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Use the ",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                          Icon(Icons.camera_alt),
+                          Text(
+                              " icon.",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18.0),
+                            ),
+                    ]),
                     SizedBox(height: 20.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            // Put your code here for what should happen when OK is tapped
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('OK'),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Put your code here for what should happen when Cancel is tapped
-                            Navigator.of(context).pop();
-                          },
-                          child: Icon(Icons.camera_alt), // Camera icon
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

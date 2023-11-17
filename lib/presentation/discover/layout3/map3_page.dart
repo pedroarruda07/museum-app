@@ -2,21 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
+import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
-import 'package:ipm_project/presentation/discover/layout3/map3_page.dart';
+import 'package:ipm_project/presentation/discover/layout3/quiz3_page.dart';
 import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
+import 'package:ipm_project/presentation/discover/stone_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
-class Map2Page extends StatefulWidget {
-  const Map2Page({super.key});
+class Map3Page extends StatefulWidget {
+  const Map3Page({super.key});
 
   @override
-  _MyMap2Page createState() => _MyMap2Page();
+  _MyMap3Page createState() => _MyMap3Page();
 }
 
-class _MyMap2Page extends State<Map2Page> {
+class _MyMap3Page extends State<Map3Page> {
 
   final GlobalKey _oneKey = GlobalKey();
   final GlobalKey _twoKey = GlobalKey();
@@ -25,6 +27,7 @@ class _MyMap2Page extends State<Map2Page> {
   final GlobalKey _fiveKey = GlobalKey();
   final GlobalKey _sixKey = GlobalKey();
   final GlobalKey _sevenKey = GlobalKey();
+  final GlobalKey _eightKey = GlobalKey();
 
   Future<bool> _checkIfTutorialShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -50,6 +53,7 @@ class _MyMap2Page extends State<Map2Page> {
             _fiveKey,
             _sixKey,
             _sevenKey,
+            _eightKey,
           ]);
           _setTutorialShown();
         });
@@ -92,14 +96,13 @@ class _MyMap2Page extends State<Map2Page> {
           children: <Widget>[
             // Positioned Base image
             Positioned.fill(
-              child: Image.asset('assets/images/mapa2.jpg', fit: BoxFit.fill),
+              child: Image.asset('assets/images/mapa3.png', fit: BoxFit.fill),
             ),
             _buildCenteredShowcase(context, '    Welcome to\n     The National History Museum!', _oneKey),
             _buildCenteredShowcase(context, 'Throughout your journey different challenges will be available to you', _fourKey),
             _buildCenteredShowcase(context, 'Complete them to earn points and be able to unlock rewards at our store!', _fiveKey),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.34,
-              left: MediaQuery.of(context).size.width * 0.005,
+              bottom: 0,
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 2");
@@ -109,16 +112,15 @@ class _MyMap2Page extends State<Map2Page> {
                   );
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
+                  width: MediaQuery.of(context).size.width * 0.14, // Specify the width
+                  height: MediaQuery.of(context).size.width * 0.2, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.30),
                         spreadRadius: 5,
                         blurRadius: 15,
-                        offset:
-                        const Offset(0, 0), // changes position of shadow
+                        offset: const Offset(0, 0), // changes position of shadow
                       ),
                     ],
                     color: Colors.transparent, // Set to transparent or any other color
@@ -128,7 +130,7 @@ class _MyMap2Page extends State<Map2Page> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.14,
+              bottom: MediaQuery.of(context).size.height * 0.14,
               left: MediaQuery.of(context).size.width * 0.005,
               child: Showcase(
                 key: _threeKey,
@@ -139,7 +141,7 @@ class _MyMap2Page extends State<Map2Page> {
                   print("Clicked Arrow 1");
                   Navigator.of(context).replace(
                     oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
+                    newRoute: MaterialPageRoute(builder: (context) => const Map2Page()),
                   );
                 },
                 child: Container(
@@ -163,69 +165,8 @@ class _MyMap2Page extends State<Map2Page> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.14,
-              right: MediaQuery.of(context).size.width * 0.005,
-              child: GestureDetector(
-                onTap: () {
-                  print("Clicked Arrow 3");
-                  Navigator.of(context).replace(
-                    oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => const Map3Page()),
-                  );
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.30),
-                        spreadRadius: 5,
-                        blurRadius: 15,
-                        offset:
-                        const Offset(0, 0), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.transparent, // Set to transparent or any other color
-                    shape: BoxShape.rectangle, // Set the shape to a circle
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.17,
-              right: MediaQuery.of(context).size.width * 0.005,
-              child: GestureDetector(
-                onTap: () {
-                  print("Clicked Arrow 4");
-                  Navigator.of(context).replace(
-                    oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => const Map3Page()),
-                  );
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.30),
-                        spreadRadius: 5,
-                        blurRadius: 15,
-                        offset:
-                        const Offset(0, 0), // changes position of shadow
-                      ),
-                    ],
-                    color: Colors.transparent, // Set to transparent or any other color
-                    shape: BoxShape.rectangle, // Set the shape to a circle
-                  ),
-                ),
-              ),
-            ),
-            Positioned(
-              top: 0,
-              right: 0,
-              width: MediaQuery.of(context).size.width,
+              top: MediaQuery.of(context).size.height * 0.095,
+              width: MediaQuery.of(context).size.width * 0.7,
               height: MediaQuery.of(context).size.height * 0.125,
               child: Showcase(
                   key: _twoKey,
@@ -233,8 +174,8 @@ class _MyMap2Page extends State<Map2Page> {
                   descriptionAlignment: TextAlign.center,
                   child: GestureDetector(
                 onTap: () {
-                    print("Clicked Dinosaur 4");
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "mos")));
+                    print("Clicked Stone 3");
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "Ruby")));
                     },
                     child: Container(
                       color: Colors.transparent,
@@ -243,14 +184,13 @@ class _MyMap2Page extends State<Map2Page> {
               ),
             ),
             Positioned(
-              top: MediaQuery.of(context).size.height * 0.21,
-              right: 0,
-              width: MediaQuery.of(context).size.width * 0.375,
-              height: MediaQuery.of(context).size.height * 0.3,
+              bottom: MediaQuery.of(context).size.height * 0.38,
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.height * 0.125,
               child: GestureDetector(
                 onTap: () {
-                  print("Clicked Dinosaur 3");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "pleio")));
+                  print("Clicked Stone 2");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "diamante")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -259,14 +199,13 @@ class _MyMap2Page extends State<Map2Page> {
             ),
             // Clickable area 1 (Top-Left quarter)
             Positioned(
-              bottom: MediaQuery.of(context).size.height * 0.133,
-              left: 0,
-              width: MediaQuery.of(context).size.width * 0.26,
-              height: MediaQuery.of(context).size.height * 0.235,
+              bottom: MediaQuery.of(context).size.height * 0.19,
+              width: MediaQuery.of(context).size.width * 0.7,
+              height: MediaQuery.of(context).size.height * 0.125,
               child: GestureDetector(
                 onTap: () {
-                  print("Clicked Dinosaur 2");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "squid")));
+                  print("Clicked Stone 1");
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "emerald")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -274,21 +213,6 @@ class _MyMap2Page extends State<Map2Page> {
               ),
             ),
             // Clickable area 2 (Bottom-Right quarter)
-            Positioned(
-              bottom: 0,
-              right: 0,
-              width: MediaQuery.of(context).size.width * 0.72,
-              height: MediaQuery.of(context).size.height * 0.13,
-              child: GestureDetector(
-                onTap: () {
-                  print("Clicked Dinosaur 1");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const DinosaurPage(picture: "espino")));
-                },
-                child: Container(
-                  color: Colors.transparent,
-                ),
-              ),
-            ),
           ],
         ),
       ),
@@ -318,14 +242,14 @@ class _MyMap2Page extends State<Map2Page> {
               Showcase(
                   key: _sevenKey,
                   onBarrierClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
-                  onTargetClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context);}),
+                  onTargetClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
                   disposeOnTap: true,
                   description: 'Look for specific items and take a photo of them when you find them!',
                   descriptionAlignment: TextAlign.center,
                   child:IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
                     onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page2item')));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page3item')));
                 },
                 color: Colors.white, // Choose a color that's visible on your map
               )),
@@ -339,10 +263,10 @@ class _MyMap2Page extends State<Map2Page> {
                   onPressed: () async {
                     if(await _checkIfQuizDone()){
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
-                      int score = prefs.getInt('scoreQuiz2') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score)));
+                      int score = prefs.getInt('scoreQuiz3') ?? 0;
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score)));
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizTwoPage()));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizThreePage()));
                     }
                   },
                   color: Colors.white, // Choose a color that's visible on your map
@@ -372,21 +296,22 @@ class _MyMap2Page extends State<Map2Page> {
 
   Future<bool> _checkIfQuizDone() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('quiz2') ?? false;
+    return prefs.getBool('quiz3') ?? false;
   }
 
 
   Future<bool> _checkIfPopupShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('popup2') ?? false;
+    return prefs.getBool('popup3') ?? false;
   }
 
   void _setPopupShown(bool value) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('popup2', value);
+    prefs.setBool('popup3', value);
   }
 
   void itemPopup(BuildContext context) async {
+
     _checkIfPopupShown().then((popupShown) {
       if(!popupShown) {
         _setPopupShown(true);
@@ -405,8 +330,9 @@ class _MyMap2Page extends State<Map2Page> {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Color.fromARGB(255, 86, 170, 212), // Replace with your start color
-                      Color.fromARGB(255, 180, 175, 133), // Replace with your end color
+                      Color.fromARGB(255, 76, 94, 74),
+                      Color.fromARGB(255, 193, 182, 161),
+                      Color.fromARGB(255, 85, 105, 119),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12.0),
@@ -427,8 +353,9 @@ class _MyMap2Page extends State<Map2Page> {
                         // Optional: Add a border, shadow, etc.
                       ),
                       clipBehavior: Clip.antiAlias, // Ensures the image is clipped to the border radius
-                      child: Image.asset('assets/images/find_items/page2item.png', height: 100),
+                      child: Image.asset('assets/images/find_items/page3item.png', height: 100),
                     ),
+                    // Your diamond-shaped image asset
                     SizedBox(height: 15.0),
                     const Text(
                       "Find the item in the picture and take a photo of it to earn 50 points!",
@@ -452,18 +379,18 @@ class _MyMap2Page extends State<Map2Page> {
                           ),
                         ]),
                     SizedBox(height: 20.0),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            // Put your code here for what should happen when OK is tapped
-                            Navigator.of(context).pop();
-                          },
-                          child: Text('OK'),
-                        ),
-                      ],
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        // Put your code here for what should happen when OK is tapped
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
                     ),
+                  ],
+                ),
               ),
             );
           },
