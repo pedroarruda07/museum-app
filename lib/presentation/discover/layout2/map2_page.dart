@@ -4,6 +4,7 @@ import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
 import 'package:ipm_project/presentation/discover/layout3/map3_page.dart';
+import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
 import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,6 +63,7 @@ class _MyMap2Page extends State<Map2Page> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
         title:
@@ -300,16 +302,22 @@ class _MyMap2Page extends State<Map2Page> {
             children: <Widget>[
               Expanded( // Expanded widget for the search bar
                 child: TextFormField(
-                  enabled: false,
+                  enabled: true,
                   style: const TextStyle(color: Colors.white), // Text color
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     labelText: 'Search',
                     labelStyle: const TextStyle(color: Colors.white), // Label text color
                     prefixIcon: const Icon(Icons.search, color: Colors.white), // Icon color
-                    disabledBorder: OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(color: Colors.white), // Border color
+                      borderSide:
+                      const BorderSide(color: Colors.white), // Border color
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide:
+                      const BorderSide(color: Colors.white), // Border color
                     ),
                   ),
                 ),
@@ -324,10 +332,24 @@ class _MyMap2Page extends State<Map2Page> {
                   descriptionAlignment: TextAlign.center,
                   child:IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page2item', color1: Color.fromARGB(255, 180, 175, 133),
-                         color2: Color.fromARGB(255, 86, 170, 212), color3: Color.fromARGB(255, 180, 175, 133))));
-                },
+                    onPressed: () async {
+                      if (await getPictureTaken()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const PictureTakenPage(
+                              page: 2,
+                                color1: Color.fromARGB(255, 180, 175, 133),
+                                color2: Color.fromARGB(255, 86, 170, 212),
+                                color3: Color.fromARGB(255, 180, 175, 133))));
+                      } else {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                            const CameraApp(page: 2,
+                                picture: 'page2item',
+                                color1: Color.fromARGB(255, 180, 175, 133),
+                                color2: Color.fromARGB(255, 86, 170, 212),
+                                color3: Color.fromARGB(255, 180, 175, 133))));
+                      }
+                  },
                 color: Colors.white, // Choose a color that's visible on your map
               )),
               Showcase(
@@ -475,5 +497,9 @@ class _MyMap2Page extends State<Map2Page> {
     });
   }
 
+  Future<bool> getPictureTaken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('camera2') ?? false;
+  }
 
 }

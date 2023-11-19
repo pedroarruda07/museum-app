@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/discover/AR_page.dart';
+import 'package:ipm_project/presentation/discover/model_page.dart';
 
 class DinosaurPage extends StatefulWidget {
   final String picture;
@@ -19,10 +19,10 @@ class _DinossaurPage extends State<DinosaurPage> {
 
     switch(picture){
       case "tri": dinoType = "triceratops_dinosaur"; break;
-      case "tex": dinoType = "tyrannosaur_fight"; break;
+      case "tex": dinoType = "trex"; break;
       case "long": dinoType = "brachiosaurus_ar_card"; break;
-      case "velociraptor": dinoType = "velociraptor%20(1)"; break;
-      case "mos": dinoType = "mosasaurus%20(1)"; break;
+      case "velociraptor": dinoType = "velociraptor"; break;
+      case "mos": dinoType = "mosasaurus"; break;
       case "pleio": dinoType = "plesio"; break;
       case "squid": dinoType = "squid"; break;
       case "espino": dinoType = "spinosaurus_animation"; break;
@@ -56,7 +56,7 @@ class _DinossaurPage extends State<DinosaurPage> {
               bottom: MediaQuery.of(context).size.height * 0.05, // Adjust this value to move the entire group
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AugmentedRealityPage(dinoType: dinoType,)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ModelViewerPage(model: dinoType,)));
                 },
                 child: Container(
                 padding: EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed

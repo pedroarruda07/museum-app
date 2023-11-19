@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ipm_project/presentation/discover/AR_page.dart';
+import 'package:ipm_project/presentation/discover/model_page.dart';
 
 class StonePage extends StatefulWidget {
   final String picture;
@@ -10,7 +10,7 @@ class StonePage extends StatefulWidget {
 
 class _StonePage extends State<StonePage> {
 
-  String dinoType = "";
+  String model = "";
   final String picture;
   _StonePage(this.picture);
 
@@ -18,14 +18,9 @@ class _StonePage extends State<StonePage> {
   void initState(){
 
     switch(picture){
-      case "tri": dinoType = "triceratops_dinosaur"; break;
-      case "tex": dinoType = "tyrannosaur_fight"; break;
-      case "long": dinoType = "brachiosaurus_ar_card"; break;
-      case "velociraptor": dinoType = "velociraptor%20(1)"; break;
-      case "mos": dinoType = "mosasaurus%20(1)"; break;
-      case "pleio": dinoType = "plesio"; break;
-      case "squid": dinoType = "squid"; break;
-      case "espino": dinoType = "spinosaurus_animation"; break;
+      case "diamante": model = "diamond"; break;
+      case "Ruby": model = "red_crystal"; break;
+      case "emerald": model = "chaos_emerald"; break;
     }
 
     super.initState();
@@ -56,7 +51,7 @@ class _StonePage extends State<StonePage> {
               bottom: MediaQuery.of(context).size.height * 0.05, // Adjust this value to move the entire group
               child: GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => AugmentedRealityPage(dinoType: dinoType,)));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => ModelViewerPage(model: model)));
                 },
                 child: Container(
                 padding: EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed

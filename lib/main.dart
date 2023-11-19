@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ipm_project/presentation/discover/exit_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
 import 'package:showcaseview/showcaseview.dart';
 
@@ -23,8 +24,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const WelcomePage(),
-        //home: DiscoverPage()), //for faster debug of discover
+        home:  const WelcomePage(),
         debugShowCheckedModeBanner: false,
       )
     )
