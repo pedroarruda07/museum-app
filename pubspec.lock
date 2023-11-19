@@ -4,7 +4,7 @@ packages:
   ar_flutter_plugin:
     dependency: "direct main"
     description:
-      path: "C:\\Users\\nmnog\\flutter\\ar_flutter_plugin-main"
+      path: "C:\\Users\\pedro\\OneDrive\\Ambiente de Trabalho\\flutter\\ar_flutter_plugin-main"
       relative: false
     source: path
     version: "0.7.3"
@@ -60,10 +60,10 @@ packages:
     dependency: transitive
     description:
       name: camera_web
-      sha256: d4c2c571c7af04f8b10702ca16bb9ed2a26e64534171e8f75c9349b2c004d8f1
+      sha256: "012c82efeb6b69626f1cf7a37c5277c1032428bcae98c7ab6401ff5e91eca628"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.2+3"
+    version: "0.3.2+2"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -576,10 +576,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "7c99c0e1e2fa190b48d25c81ca5e42036d5cac81430ef249027d97b0935c553f"
+      sha256: "350a11abd2d1d97e0cc7a28a81b781c08002aa2864d9e3f192ca0ffa18b06ed3"
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.0.9"
   xdg_directories:
     dependency: transitive
     description:
@@ -589,5 +589,5 @@ packages:
     source: hosted
     version: "1.0.3"
 sdks:
-  dart: ">=3.1.0 <4.0.0"
-  flutter: ">=3.13.0"
+  dart: ">=3.1.0-236.0.dev <4.0.0"
+  flutter: ">=3.7.0"
