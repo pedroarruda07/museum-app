@@ -8,7 +8,7 @@ class ModelViewerPage extends StatelessWidget {
   final String model;
   final GlobalKey _oneKey = GlobalKey();
 
-  ModelViewerPage({Key? key, required this.model}) : super(key: key);
+  ModelViewerPage({super.key, required this.model});
 
   Future<bool> _checkIfTutorialShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();

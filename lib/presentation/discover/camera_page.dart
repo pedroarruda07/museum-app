@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CameraApp extends StatefulWidget {
@@ -174,8 +173,11 @@ class _CameraAppState extends State<CameraApp> {
                   );*/
                   //_showFailPopup(context);
                   int i = generateRandomDigit();
-                  if (i < 3) _showCorrectPopup(context);
-                  else _showFailPopup(context);
+                  if (i < 3) {
+                    _showCorrectPopup(context);
+                  } else {
+                    _showFailPopup(context);
+                  }
 
                 },
               ),

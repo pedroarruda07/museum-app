@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
-import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/exit_page.dart';
-import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
-import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
 import 'package:ipm_project/presentation/discover/layout3/quiz3_page.dart';
 import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
 import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
@@ -62,7 +59,7 @@ class _MyMap3Page extends State<Map3Page> {
       }
     });
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       //_setPopupShown(false); //for debug
       itemPopup(context);
     });
@@ -247,8 +244,8 @@ class _MyMap3Page extends State<Map3Page> {
               const SizedBox(width: 12.0),
               Showcase(
                   key: _sevenKey,
-                  onBarrierClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
-                  onTargetClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
+                  onBarrierClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
+                  onTargetClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
                   disposeOnTap: true,
                   description: 'Look for specific items and take a photo of them when you find them!',
                   descriptionAlignment: TextAlign.center,
@@ -285,8 +282,8 @@ class _MyMap3Page extends State<Map3Page> {
                     if(await _checkIfQuizDone()){
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
                       int score = prefs.getInt('scoreQuiz3') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score, color1: Color.fromARGB(255, 76, 94, 74),
-                          color2: Color.fromARGB(255, 193, 182, 161), color3: Color.fromARGB(255, 85, 105, 119))));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score, color1: const Color.fromARGB(255, 76, 94, 74),
+                          color2: const Color.fromARGB(255, 193, 182, 161), color3: const Color.fromARGB(255, 85, 105, 119))));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizThreePage()));
                     }
@@ -346,7 +343,7 @@ class _MyMap3Page extends State<Map3Page> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), // this right here
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
@@ -367,7 +364,7 @@ class _MyMap3Page extends State<Map3Page> {
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     Container(
                       decoration: BoxDecoration(
                         // Rounded corners
@@ -378,13 +375,13 @@ class _MyMap3Page extends State<Map3Page> {
                       child: Image.asset('assets/images/find_items/page3item.png', height: 100),
                     ),
                     // Your diamond-shaped image asset
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Text(
                       "Find the item in the picture and take a photo of it to earn 50 points!",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -400,7 +397,7 @@ class _MyMap3Page extends State<Map3Page> {
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ]),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -409,7 +406,7 @@ class _MyMap3Page extends State<Map3Page> {
                         // Put your code here for what should happen when OK is tapped
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -464,7 +461,7 @@ class _MyMap3Page extends State<Map3Page> {
   Future<int?> _getScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return await prefs.getInt('score');
+    return prefs.getInt('score');
   }
 
   Future<bool> getPictureTaken() async {

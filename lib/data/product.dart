@@ -4,7 +4,6 @@ class Product {
   final List<String> information;
   final String description;
   final double price;
-  final List<String> reviews;
 
   Product({
     required this.name,
@@ -12,6 +11,5 @@ class Product {
     required this.information,
     required this.description,
     required this.price,
-    required this.reviews,
   });
 }
