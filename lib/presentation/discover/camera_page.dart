@@ -1,26 +1,32 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CameraApp extends StatefulWidget {
+  final int page;
   final String picture;
   final Color color1;
   final Color color2;
   final Color color3;
-  const CameraApp({super.key, required this.picture, required this.color1, required this.color2, required this.color3});
+  const CameraApp({super.key, required this.page, required this.picture, required this.color1, required this.color2, required this.color3});
 
   @override
-  _CameraAppState createState() => _CameraAppState(picture, color1, color2, color3);
+  _CameraAppState createState() => _CameraAppState(page, picture, color1, color2, color3);
 }
 
 class _CameraAppState extends State<CameraApp> {
   CameraController? _controller;
   List<CameraDescription>? _cameras;
   Future<void>? _initializeControllerFuture;
+  final int page;
   final String picture;
   final Color color1;
   final Color color2;
   final Color color3;
-  _CameraAppState(this.picture, this.color1, this.color2, this.color3);
+  _CameraAppState(this.page, this.picture, this.color1, this.color2, this.color3);
 
   @override
   void initState() {
@@ -55,6 +61,11 @@ class _CameraAppState extends State<CameraApp> {
     // Dispose of the controller when the widget is disposed.
     _controller?.dispose();
     super.dispose();
+  }
+
+  Future<void> pictureTaken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('camera$page', true);
   }
 
   @override
@@ -157,7 +168,15 @@ class _CameraAppState extends State<CameraApp> {
               child: FloatingActionButton(
                 child: const Icon(Icons.camera_alt),
                 onPressed: () async {
-                  // TODO: Handle camera capture functionality
+                 /* Navigator.of(context).replace(
+                  oldRoute: ModalRoute.of(context)!,
+                  newRoute: MaterialPageRoute(builder: (context) => PictureTakenPage(page: page, color1: color1, color2: color2, color3: color3)),
+                  );*/
+                  //_showFailPopup(context);
+                  int i = generateRandomDigit();
+                  if (i < 3) _showCorrectPopup(context);
+                  else _showFailPopup(context);
+
                 },
               ),
             ),
@@ -165,6 +184,131 @@ class _CameraAppState extends State<CameraApp> {
         ],
       ),
     );
+  }
+
+  int generateRandomDigit() {
+    var random = Random();
+    return random.nextInt(10); // Generates a random number between 0 and 9
+  }
+
+  void _showFailPopup(BuildContext context) {
+
+     showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text(
+            'Wrong item',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: const Text(
+            "That is not the item we were looking for!",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Try again'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _showCorrectPopup(BuildContext context) async {
+    _setScore();
+    pictureTaken();
+
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text(
+            "Item Found!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Colors.white,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min, // Use minimum space
+            children: [
+              const SizedBox(height: 10),
+              const Text(
+                "You Earned",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white),
+              ),
+              const SizedBox(height: 10), // Spacing
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.white, width: 2), // Square border
+                  borderRadius:
+                  BorderRadius.circular(4), // Slightly rounded corners
+                ),
+                child: const Text(
+                  "50",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                "Points",
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: Colors.white),
+              ),
+              const SizedBox(height: 20), // Spacing
+              Text(
+                "Item $page/3",
+                style: const TextStyle(color: Colors.white),
+              ), // Example quiz number
+            ],
+          ),
+          actions: [
+            Center(
+              child: TextButton(
+                child: const Text("CONTINUE EXPLORING"),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _setScore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Retrieve the existing score or set it to 0 if it doesn't exist
+    int existingScore = prefs.getInt('score') ?? 0;
+
+    // Calculate the new total score by adding the current quiz score
+    int totalScore = existingScore + 50;
+
+    // Save the updated total score back to SharedPreferences
+    await prefs.setInt('score', totalScore);
   }
 
 }

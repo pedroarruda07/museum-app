@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
+import 'package:ipm_project/presentation/discover/exit_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
 import 'package:ipm_project/presentation/discover/layout3/quiz3_page.dart';
+import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
 import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
 import 'package:ipm_project/presentation/discover/stone_page.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
@@ -66,6 +68,7 @@ class _MyMap3Page extends State<Map3Page> {
     });
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
         title:
@@ -106,10 +109,7 @@ class _MyMap3Page extends State<Map3Page> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Arrow 2");
-                  Navigator.of(context).replace(
-                    oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
-                  );
+                  _showExitPopup(context);
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 0.14, // Specify the width
@@ -224,16 +224,22 @@ class _MyMap3Page extends State<Map3Page> {
             children: <Widget>[
               Expanded( // Expanded widget for the search bar
                 child: TextFormField(
-                  enabled: false,
+                  enabled: true,
                   style: const TextStyle(color: Colors.white), // Text color
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     labelText: 'Search',
                     labelStyle: const TextStyle(color: Colors.white), // Label text color
                     prefixIcon: const Icon(Icons.search, color: Colors.white), // Icon color
-                    disabledBorder: OutlineInputBorder(
+                    focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide: const BorderSide(color: Colors.white), // Border color
+                      borderSide:
+                      const BorderSide(color: Colors.white), // Border color
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide:
+                      const BorderSide(color: Colors.white), // Border color
                     ),
                   ),
                 ),
@@ -248,10 +254,24 @@ class _MyMap3Page extends State<Map3Page> {
                   descriptionAlignment: TextAlign.center,
                   child:IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CameraApp(picture: 'page3item', color1: Color.fromARGB(255, 76, 94, 74),
-                          color2: Color.fromARGB(255, 193, 182, 161), color3: Color.fromARGB(255, 85, 105, 119))));
-                },
+                    onPressed: () async {
+                      if (await getPictureTaken()) {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const PictureTakenPage(
+                                page: 3,
+                                color1: Color.fromARGB(255, 76, 94, 74),
+                                color2: Color.fromARGB(255, 193, 182, 161),
+                                color3: Color.fromARGB(255, 85, 105, 119))));
+                      } else {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                            const CameraApp(page: 3,
+                                picture: 'page3item',
+                                color1: Color.fromARGB(255, 76, 94, 74),
+                                color2: Color.fromARGB(255, 193, 182, 161),
+                                color3: Color.fromARGB(255, 85, 105, 119))));
+                      }
+                  },
                 color: Colors.white, // Choose a color that's visible on your map
               )),
               Showcase(
@@ -401,5 +421,55 @@ class _MyMap3Page extends State<Map3Page> {
     });
   }
 
+  void _showExitPopup(BuildContext context) {
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+          title: const Text(
+            'Are you sure you want to exit our tour?',
+            style: TextStyle(color: Colors.white),
+          ),
+          content: const Text(
+            "This action is irreversible",
+            style: TextStyle(color: Colors.white),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                int score = await _getScore() ?? 0;
+                 Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => ExitPage(score: score)), // Replace with your destination page
+                      (Route<dynamic> route) => route.isFirst, // Condition to remove all previous routes
+                );
+
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<int?> _getScore() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return await prefs.getInt('score');
+  }
+
+  Future<bool> getPictureTaken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('camera3') ?? false;
+  }
 
 }
