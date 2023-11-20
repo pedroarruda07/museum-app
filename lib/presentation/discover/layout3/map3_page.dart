@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
 import 'package:ipm_project/presentation/discover/exit_page.dart';
+import 'package:ipm_project/presentation/discover/game_page.dart';
+import 'package:ipm_project/presentation/discover/game_played_page.dart';
+import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
 import 'package:ipm_project/presentation/discover/layout3/quiz3_page.dart';
 import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
@@ -18,7 +21,6 @@ class Map3Page extends StatefulWidget {
 }
 
 class _MyMap3Page extends State<Map3Page> {
-
   final GlobalKey _oneKey = GlobalKey();
   final GlobalKey _twoKey = GlobalKey();
   final GlobalKey _threeKey = GlobalKey();
@@ -27,6 +29,14 @@ class _MyMap3Page extends State<Map3Page> {
   final GlobalKey _sixKey = GlobalKey();
   final GlobalKey _sevenKey = GlobalKey();
   final GlobalKey _eightKey = GlobalKey();
+  final GlobalKey _nineKey = GlobalKey();
+  bool stonesChecked = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkStonesChecked();
+  }
 
   Future<bool> _checkIfTutorialShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,9 +48,34 @@ class _MyMap3Page extends State<Map3Page> {
     await prefs.setBool('tutorial', true);
   }
 
+  Future<void> _setGameShown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('gameTutorial', true);
+  }
+
+  Future<bool> _getGameShown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('gameTutorial') ?? false;
+  }
+
+  Future<void> _setGameTutorial() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('gameFirstTutorial', true);
+  }
+
+  Future<bool> _getGameTutorial() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('gameFirstTutorial') ?? false;
+  }
+
+  Future<bool> _getPopupShown() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('popup3') ?? false;
+  }
+
+
   @override
   Widget build(BuildContext context) {
-
     _checkIfTutorialShown().then((tutorialShown) {
       if (!tutorialShown) {
         Future.delayed(Duration.zero, () {
@@ -52,14 +87,35 @@ class _MyMap3Page extends State<Map3Page> {
             _fiveKey,
             _sixKey,
             _sevenKey,
-            _eightKey,
           ]);
           _setTutorialShown();
         });
       }
     });
 
-    Future.delayed(const Duration(seconds: 1), () {
+    _getGameShown().then((shown) {
+      if (!shown && stonesChecked) {
+
+          Future.delayed(Duration.zero, () {
+            ShowCaseWidget.of(context).startShowCase([_eightKey]);
+            _setGameShown();
+          });
+      }
+    });
+
+    _getGameTutorial().then((tutorialshown) {
+      _getPopupShown().then((popup){
+      if (!tutorialshown && popup) {
+
+        Future.delayed(Duration(seconds: 1), () {
+          ShowCaseWidget.of(context).startShowCase([_nineKey]);
+          _setGameTutorial();
+        });
+      }
+      });
+    });
+
+    Future.delayed(Duration(seconds: 1), () {
       //_setPopupShown(false); //for debug
       itemPopup(context);
     });
@@ -67,9 +123,8 @@ class _MyMap3Page extends State<Map3Page> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
-        title:
-        const Text(
+        backgroundColor: const Color.fromARGB(255, 30, 30, 30),
+        title: const Text(
           'Explore the Museum',
           style: TextStyle(color: Colors.white),
         ),
@@ -78,7 +133,8 @@ class _MyMap3Page extends State<Map3Page> {
             // alignment: Alignment.centerRight,
             icon: const Icon(Icons.question_mark, color: Colors.white),
             onPressed: () async {
-              final SharedPreferences prefs = await SharedPreferences.getInstance();
+              final SharedPreferences prefs =
+                  await SharedPreferences.getInstance();
               await prefs.setBool('tutorial', false);
               setState(() {});
             },
@@ -87,8 +143,8 @@ class _MyMap3Page extends State<Map3Page> {
         centerTitle: true, // This centers the title
         leading: IconButton(
             icon: const Icon(Icons.home, color: Colors.white),
-            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => const WelcomePage()))
-        ),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const WelcomePage()))),
       ),
       body: Center(
         child: Stack(
@@ -98,9 +154,20 @@ class _MyMap3Page extends State<Map3Page> {
             Positioned.fill(
               child: Image.asset('assets/images/mapa3.png', fit: BoxFit.fill),
             ),
-            _buildCenteredShowcase(context, '    Welcome to\n     The National History Museum!', _oneKey),
-            _buildCenteredShowcase(context, 'Throughout your journey different challenges will be available to you', _fourKey),
-            _buildCenteredShowcase(context, 'Complete them to earn points and be able to unlock rewards at our store!', _fiveKey),
+            _buildCenteredShowcase(context,
+                '    Welcome to\n     The National History Museum!', _oneKey),
+            _buildCenteredShowcase(
+                context,
+                'Throughout your journey different challenges will be available to you',
+                _fourKey),
+            _buildCenteredShowcase(
+                context,
+                'Complete them to earn points and be able to unlock rewards at our store!',
+                _fiveKey),
+            _buildCenteredShowcase(
+                context,
+                'Explore all the exhibits in this room to unlock an extra challenge!',
+                _nineKey),
             Positioned(
               bottom: 0,
               child: GestureDetector(
@@ -109,18 +176,22 @@ class _MyMap3Page extends State<Map3Page> {
                   _showExitPopup(context);
                 },
                 child: Container(
-                  width: MediaQuery.of(context).size.width * 0.14, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.2, // Use width to ensure the container is a circle
+                  width: MediaQuery.of(context).size.width *
+                      0.14, // Specify the width
+                  height: MediaQuery.of(context).size.width *
+                      0.2, // Use width to ensure the container is a circle
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black.withOpacity(0.30),
                         spreadRadius: 5,
                         blurRadius: 15,
-                        offset: const Offset(0, 0), // changes position of shadow
+                        offset:
+                            const Offset(0, 0), // changes position of shadow
                       ),
                     ],
-                    color: Colors.transparent, // Set to transparent or any other color
+                    color: Colors
+                        .transparent, // Set to transparent or any other color
                     shape: BoxShape.rectangle, // Set the shape to a circle
                   ),
                 ),
@@ -130,36 +201,39 @@ class _MyMap3Page extends State<Map3Page> {
               bottom: MediaQuery.of(context).size.height * 0.14,
               left: MediaQuery.of(context).size.width * 0.005,
               child: Showcase(
-                key: _threeKey,
-                description: 'Use the arrows to move through the museum',
-                descriptionAlignment: TextAlign.center,
-                child:GestureDetector(
-                onTap: () {
-                  print("Clicked Arrow 1");
-                  Navigator.of(context).replace(
-                    oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => const Map2Page()),
-                  );
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width * 0.12, // Specify the width
-                  height: MediaQuery.of(context).size.width * 0.13, // Use width to ensure the container is a circle
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.30),
-                        spreadRadius: 5,
-                        blurRadius: 15,
-                        offset:
-                        const Offset(0, 0), // changes position of shadow
+                  key: _threeKey,
+                  description: 'Use the arrows to move through the museum',
+                  descriptionAlignment: TextAlign.center,
+                  child: GestureDetector(
+                    onTap: () {
+                      print("Clicked Arrow 1");
+                      Navigator.of(context).replace(
+                        oldRoute: ModalRoute.of(context)!,
+                        newRoute: MaterialPageRoute(
+                            builder: (context) => const Map2Page()),
+                      );
+                    },
+                    child: Container(
+                      width: MediaQuery.of(context).size.width *
+                          0.12, // Specify the width
+                      height: MediaQuery.of(context).size.width *
+                          0.13, // Use width to ensure the container is a circle
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.30),
+                            spreadRadius: 5,
+                            blurRadius: 15,
+                            offset: const Offset(
+                                0, 0), // changes position of shadow
+                          ),
+                        ],
+                        color: Colors
+                            .transparent, // Set to transparent or any other color
+                        shape: BoxShape.rectangle, // Set the shape to a circle
                       ),
-                    ],
-                    color: Colors.transparent, // Set to transparent or any other color
-                    shape: BoxShape.rectangle, // Set the shape to a circle
-                  ),
-                ),
-                )
-              ),
+                    ),
+                  )),
             ),
             Positioned(
               top: MediaQuery.of(context).size.height * 0.095,
@@ -167,18 +241,27 @@ class _MyMap3Page extends State<Map3Page> {
               height: MediaQuery.of(context).size.height * 0.125,
               child: Showcase(
                   key: _twoKey,
-                  description: 'Click to learn more about the exhibits shown or bring them to life with our Augmented Reality!',
+                  description:
+                      'Click to learn more about the exhibits shown or bring them to life with our Augmented Reality!',
                   descriptionAlignment: TextAlign.center,
                   child: GestureDetector(
-                onTap: () {
-                    print("Clicked Stone 3");
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "Ruby")));
+                    onTap: () {
+                      print("Clicked Stone 3");
+                      _setStoneChecked(3);
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const StonePage(picture: "Ruby")))
+                          .then((_) {
+                        _checkStonesChecked();
+                        setState(() {
+                        });
+                      });
                     },
                     child: Container(
                       color: Colors.transparent,
                     ),
-                  )
-              ),
+                  )),
             ),
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.38,
@@ -187,7 +270,16 @@ class _MyMap3Page extends State<Map3Page> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Stone 2");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "diamante")));
+                  _setStoneChecked(2);
+                  Navigator.of(context)
+                      .push(MaterialPageRoute(
+                          builder: (context) =>
+                              const StonePage(picture: "diamante")))
+                      .then((_) {
+                    _checkStonesChecked();
+                    setState(() {
+                    });
+                  });
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -219,24 +311,27 @@ class _MyMap3Page extends State<Map3Page> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              Expanded( // Expanded widget for the search bar
+              Expanded(
+                // Expanded widget for the search bar
                 child: TextFormField(
                   enabled: true,
                   style: const TextStyle(color: Colors.white), // Text color
                   decoration: InputDecoration(
                     contentPadding: const EdgeInsets.symmetric(vertical: 5),
                     labelText: 'Search',
-                    labelStyle: const TextStyle(color: Colors.white), // Label text color
-                    prefixIcon: const Icon(Icons.search, color: Colors.white), // Icon color
+                    labelStyle: const TextStyle(
+                        color: Colors.white), // Label text color
+                    prefixIcon: const Icon(Icons.search,
+                        color: Colors.white), // Icon color
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide:
-                      const BorderSide(color: Colors.white), // Border color
+                          const BorderSide(color: Colors.white), // Border color
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
                       borderSide:
-                      const BorderSide(color: Colors.white), // Border color
+                          const BorderSide(color: Colors.white), // Border color
                     ),
                   ),
                 ),
@@ -244,12 +339,20 @@ class _MyMap3Page extends State<Map3Page> {
               const SizedBox(width: 12.0),
               Showcase(
                   key: _sevenKey,
-                  onBarrierClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
-                  onTargetClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
+                  onBarrierClick: () =>
+                      Future.delayed(Duration(seconds: 1), () {
+                        _setPopupShown(false);
+                        itemPopup(context);
+                      }),
+                  onTargetClick: () => Future.delayed(Duration(seconds: 1), () {
+                        _setPopupShown(false);
+                        itemPopup(context);
+                      }),
                   disposeOnTap: true,
-                  description: 'Look for specific items and take a photo of them when you find them!',
+                  description:
+                      'Look for specific items and take a photo of them when you find them!',
                   descriptionAlignment: TextAlign.center,
-                  child:IconButton(
+                  child: IconButton(
                     icon: const Icon(Icons.camera_alt), // Camera icon
                     onPressed: () async {
                       if (await getPictureTaken()) {
@@ -260,37 +363,50 @@ class _MyMap3Page extends State<Map3Page> {
                                 color2: Color.fromARGB(255, 193, 182, 161),
                                 color3: Color.fromARGB(255, 85, 105, 119))));
                       } else {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) =>
-                            const CameraApp(page: 3,
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const CameraApp(
+                                page: 3,
                                 picture: 'page3item',
                                 color1: Color.fromARGB(255, 76, 94, 74),
                                 color2: Color.fromARGB(255, 193, 182, 161),
                                 color3: Color.fromARGB(255, 85, 105, 119))));
                       }
-                  },
-                color: Colors.white, // Choose a color that's visible on your map
-              )),
+                    },
+                    color: Colors
+                        .white, // Choose a color that's visible on your map
+                  )),
               Showcase(
                 key: _sixKey,
-                description: 'Here you can access the quiz challenges!\nThere is one for every section of the museum',
+                description:
+                    'Here you can access the quiz challenges!\nThere is one for every section of the museum',
                 descriptionAlignment: TextAlign.center,
                 child: IconButton(
                   padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
-                  icon: Image.asset('assets/icons/quiz_icon.png',), // Camera icon
+                  icon: Image.asset(
+                    'assets/icons/quiz_icon.png',
+                  ), // Camera icon
                   onPressed: () async {
-                    if(await _checkIfQuizDone()){
-                      final SharedPreferences prefs = await SharedPreferences.getInstance();
+                    if (await _checkIfQuizDone()) {
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
                       int score = prefs.getInt('scoreQuiz3') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "3", score: score, color1: const Color.fromARGB(255, 76, 94, 74),
-                          color2: const Color.fromARGB(255, 193, 182, 161), color3: const Color.fromARGB(255, 85, 105, 119))));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => QuizDonePage(
+                              page: "3",
+                              score: score,
+                              color1: Color.fromARGB(255, 76, 94, 74),
+                              color2: Color.fromARGB(255, 193, 182, 161),
+                              color3: Color.fromARGB(255, 85, 105, 119))));
                     } else {
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizThreePage()));
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const QuizThreePage()));
                     }
                   },
-                  color: Colors.white, // Choose a color that's visible on your map
+                  color:
+                      Colors.white, // Choose a color that's visible on your map
                 ),
               ),
+              _widgetStonesChecked(),
             ],
           ),
         ),
@@ -298,7 +414,8 @@ class _MyMap3Page extends State<Map3Page> {
     );
   }
 
-  Widget _buildCenteredShowcase(BuildContext context, String text, GlobalKey key) {
+  Widget _buildCenteredShowcase(
+      BuildContext context, String text, GlobalKey key) {
     return Align(
       alignment: Alignment.center,
       child: Showcase(
@@ -307,10 +424,58 @@ class _MyMap3Page extends State<Map3Page> {
         title: text,
         titleAlignment: TextAlign.center,
         description: '',
-        child: const SizedBox(width: 0, height: 0), // Empty Container as a placeholder
+        child: const SizedBox(
+            width: 0, height: 0), // Empty Container as a placeholder
         // Other properties...
       ),
     );
+  }
+
+  void _checkStonesChecked() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool bool1 = prefs.getBool('stone1') ?? false;
+    bool bool2 = prefs.getBool('stone2') ?? false;
+    bool bool3 = prefs.getBool('stone3') ?? false;
+    setState(() {
+      stonesChecked = bool1 && bool2 && bool3;
+    });
+  }
+
+  Widget _widgetStonesChecked() {
+    if (stonesChecked) {
+      return Showcase(
+          key: _eightKey,
+          description: 'You have unlocked a new challenge, click here to play!',
+          descriptionAlignment: TextAlign.center,
+          child: IconButton(
+            padding: const EdgeInsets.fromLTRB(2, 2, 2, 2),
+            icon: Icon(Icons.videogame_asset), // Camera icon
+            onPressed: () async {
+              if (await _checkIfGameDone()) {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                int score = prefs.getInt('scoreGame') ?? 0;
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => GameDonePage(
+                        score: score,
+                        color1: Color.fromARGB(255, 76, 94, 74),
+                        color2: Color.fromARGB(255, 193, 182, 161),
+                        color3: Color.fromARGB(255, 85, 105, 119))));
+              } else {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => GamePage()));
+              }
+            },
+            color: Colors.white, // Choose a color that's visible on your map
+          ));
+    } else {
+      return SizedBox.shrink();
+    }
+  }
+
+  Future<bool> _setStoneChecked(int number) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setBool('stone$number', true);
   }
 
   Future<bool> _checkIfQuizDone() async {
@@ -318,6 +483,10 @@ class _MyMap3Page extends State<Map3Page> {
     return prefs.getBool('quiz3') ?? false;
   }
 
+  Future<bool> _checkIfGameDone() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('game') ?? false;
+  }
 
   Future<bool> _checkIfPopupShown() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -330,16 +499,14 @@ class _MyMap3Page extends State<Map3Page> {
   }
 
   void itemPopup(BuildContext context) async {
-
     _checkIfPopupShown().then((popupShown) {
-      if(!popupShown) {
+      if (!popupShown) {
         _setPopupShown(true);
         showDialog(
           barrierDismissible: false,
           context: context,
           builder: (BuildContext context) {
             return Dialog(
-
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), // this right here
               child: Container(
@@ -368,11 +535,15 @@ class _MyMap3Page extends State<Map3Page> {
                     Container(
                       decoration: BoxDecoration(
                         // Rounded corners
-                        borderRadius: BorderRadius.circular(10), // Adjust radius to your preference
+                        borderRadius: BorderRadius.circular(
+                            10), // Adjust radius to your preference
                         // Optional: Add a border, shadow, etc.
                       ),
-                      clipBehavior: Clip.antiAlias, // Ensures the image is clipped to the border radius
-                      child: Image.asset('assets/images/find_items/page3item.png', height: 100),
+                      clipBehavior: Clip
+                          .antiAlias, // Ensures the image is clipped to the border radius
+                      child: Image.asset(
+                          'assets/images/find_items/page3item.png',
+                          height: 100),
                     ),
                     // Your diamond-shaped image asset
                     const SizedBox(height: 15.0),
@@ -405,6 +576,8 @@ class _MyMap3Page extends State<Map3Page> {
                       onPressed: () {
                         // Put your code here for what should happen when OK is tapped
                         Navigator.of(context).pop();
+                        setState(() {
+                        });
                       },
                       child: const Text('OK'),
                     ),
@@ -444,10 +617,13 @@ class _MyMap3Page extends State<Map3Page> {
               child: const Text('Yes'),
               onPressed: () async {
                 int score = await _getScore() ?? 0;
-                 Navigator.pushAndRemoveUntil(
+                Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => ExitPage(score: score)), // Replace with your destination page
-                      (Route<dynamic> route) => route.isFirst, // Condition to remove all previous routes
+                  MaterialPageRoute(
+                      builder: (context) => ExitPage(
+                          score: score)), // Replace with your destination page
+                  (Route<dynamic> route) =>
+                      route.isFirst, // Condition to remove all previous routes
                 );
 
               },
@@ -461,12 +637,11 @@ class _MyMap3Page extends State<Map3Page> {
   Future<int?> _getScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    return prefs.getInt('score');
+    return await prefs.getInt('score');
   }
 
   Future<bool> getPictureTaken() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('camera3') ?? false;
   }
-
 }

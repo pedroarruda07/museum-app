@@ -37,8 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   qr_code_scanner: ^1.0.1
   camera: ^0.10.5+5
-  ar_flutter_plugin:
-    path: C:\Users\nmnog\flutter\ar_flutter_plugin-main
   path_provider: ^2.1.1
   flutter_archive: ^5.0.0
   showcaseview: ^2.0.3
@@ -46,7 +44,14 @@ dependencies:
   carousel_slider: ^4.2.1
   model_viewer_plus: ^1.6.1
   provider: ^6.1.1
+  flutter_launcher_icons: ^0.13.1
   table_calendar: ^3.0.2
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/dino-logo.png"
+
 
 
 dev_dependencies:
@@ -73,6 +78,7 @@ flutter:
     - assets/images/stones/
     - assets/images/find_items/
     - assets/models/
+    - assets/game/
 
 
   # The following line ensures that the Material Icons font is

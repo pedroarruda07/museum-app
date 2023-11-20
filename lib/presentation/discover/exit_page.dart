@@ -16,6 +16,8 @@ class ExitPage extends StatelessWidget {
     await prefs.setInt('scoreQuiz1', 0);
     await prefs.setInt('scoreQuiz2', 0);
     await prefs.setInt('scoreQuiz3', 0);
+    await prefs.setInt('scoreGame', 0);
+    await prefs.setBool('game', false);
   }
 
   Future<void> _setTicketScanned() async {
@@ -28,6 +30,9 @@ class ExitPage extends StatelessWidget {
     await prefs.setBool('quiz1', false);
     await prefs.setBool('quiz2', false);
     await prefs.setBool('quiz3', false);
+    await prefs.setBool('stone1', false);
+    await prefs.setBool('stone2', false);
+    await prefs.setBool('stone3', false);
   }
 
   void _setPopupNotShown() async {
@@ -41,6 +46,8 @@ class ExitPage extends StatelessWidget {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('tutorial', false);
     await prefs.setBool('tutorialAR', false);
+    await prefs.setBool('gameTutorial', false);
+    await prefs.setBool('gameFirstTutorial', false);
   }
 
   Future<void> _resetPictureTaken() async {
@@ -79,7 +86,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildOutlinedText('Thank you for visiting us:', 25),
+                      _buildOutlinedText('Thank you for visiting us!', 25),
 
                     ],
                   ),
@@ -87,7 +94,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildForegroundText('Thank you for visiting us:', 25),
+                      _buildForegroundText('Thank you for visiting us!', 25),
 
                     ],
                   ),
@@ -142,7 +149,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildOutlinedText('You unlocked a ${score/10}% discount code!', 20),
+                      _buildOutlinedText('You unlocked a ${score/20}% discount code!', 20),
 
                     ],
                   ),
@@ -150,7 +157,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildForegroundText('You unlocked a ${score/10}% discount code!', 20),
+                      _buildForegroundText('You unlocked a ${score/20}% discount code!', 20),
 
                     ],
                   ),
