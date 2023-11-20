@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:ipm_project/presentation/book_visit/buyticket_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -103,14 +104,7 @@ class _QRViewExampleState extends State<QRViewExample> {
                 padding: const EdgeInsets.all(8.0), // Add some padding around the text
                 child: TextButton(
                   onPressed: () {
-                    //Navigator.of(context).push(MaterialPageRoute(builder: (context) => BuyTicketPage()));
-
-                    //just for testing, rememebr to swap
-                    _setTicketScanned();
-                    Navigator.of(context).replace(
-                      oldRoute: ModalRoute.of(context)!,
-                      newRoute: MaterialPageRoute(builder: (context) => const DiscoverPage()),
-                    );
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => const BuyTicketPage()));
                   },
                   child: const Text(
                     "Haven't bought a ticket yet?\n   Click here to buy tickets",

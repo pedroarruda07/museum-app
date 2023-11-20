@@ -166,7 +166,7 @@ class _MyMap3Page extends State<Map3Page> {
                 _fiveKey),
             _buildCenteredShowcase(
                 context,
-                'Explore all the exhibits in this room to unlock a new challenge!',
+                'Explore all the exhibits in this room to unlock an extra challenge!',
                 _nineKey),
             Positioned(
               bottom: 0,
