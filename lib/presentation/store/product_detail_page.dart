@@ -186,6 +186,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> with SingleTicker
                   style: priceStyle,
                 ),
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.green,
+                    onPrimary: Colors.white,
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                  ),
                   onPressed: () {
                     context.read<Cart>().addToCart(widget.product);
                     ScaffoldMessenger.of(context).showSnackBar(

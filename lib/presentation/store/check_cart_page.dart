@@ -189,6 +189,10 @@ class _CartPageState extends State<CartPage> with SingleTickerProviderStateMixin
                 Padding(
                   padding: EdgeInsets.only(left: 8.0),
                   child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.green,
+                      onPrimary: Colors.white,
+                    ),
                     onPressed: () {
                       Navigator.push(context, MaterialPageRoute(builder: (context) => CheckoutPage()));
                     },

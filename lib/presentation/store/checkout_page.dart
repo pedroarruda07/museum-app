@@ -136,6 +136,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
               SizedBox(height: 20),
               // Button to place the order
               ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.black87,
+                  onPrimary: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                ),
                 onPressed: () {
                   // Implement logic to place the order
                 },
