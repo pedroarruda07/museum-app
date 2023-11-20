@@ -48,6 +48,11 @@ class StorePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 FloatingActionButton(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black87,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   onPressed: () {
                     // Show filter options as a pop-up dialog
                     showDialog(
@@ -189,7 +194,7 @@ class StorePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
                                 product.images[0], // Assuming the first image in the list represents the product
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -235,7 +240,7 @@ class StorePage extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const CartPage()), // Replace CheckoutPage with your actual checkout page widget
               );
             },
-            backgroundColor: Colors.blue, // Change the color as needed
+            backgroundColor: Colors.black87,
             child: const Icon(Icons.shopping_cart), // Shopping cart icon
           ),
           if (cartCount > 0) // Show the cart count only if it's greater than 0
