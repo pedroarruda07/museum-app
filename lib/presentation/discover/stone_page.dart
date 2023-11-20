@@ -73,7 +73,7 @@ class _StonePage extends State<StonePage> {
                   children: <Widget>[
                      Icon(Icons.vrpano_outlined, size: 70.0, color: Colors.white,), // Camera icon
                      Text(
-                      'Bring it to life!',
+                      'Interact with it!',
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17, color: Colors.white),
                     ),
                   ],

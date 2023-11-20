@@ -69,6 +69,7 @@ flutter:
     - assets/images/stones/
     - assets/images/find_items/
     - assets/models/
+    - assets/game/
 
 
   # The following line ensures that the Material Icons font is

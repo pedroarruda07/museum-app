@@ -38,7 +38,7 @@ class ModelViewerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 30, 30, 30),
-        title: const Text('Bring it to Life!'),
+        title: const Text('Interact With It!'),
         centerTitle: true,
       ),
       body: Stack(
