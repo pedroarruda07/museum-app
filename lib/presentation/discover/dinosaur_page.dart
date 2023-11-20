@@ -3,7 +3,7 @@ import 'package:ipm_project/presentation/discover/model_page.dart';
 
 class DinosaurPage extends StatefulWidget {
   final String picture;
-  const DinosaurPage({Key? key, required this.picture}) : super(key: key);
+  const DinosaurPage({super.key, required this.picture});
   @override
   _DinossaurPage createState() => _DinossaurPage(picture);
 }
@@ -35,7 +35,7 @@ class _DinossaurPage extends State<DinosaurPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:  Color.fromARGB(255, 30, 30, 30),
+        backgroundColor:  const Color.fromARGB(255, 30, 30, 30),
         title: const Text('Explore the Museum',
             style: TextStyle(color: Colors.white)),
         centerTitle: true, // This centers the title
@@ -59,14 +59,14 @@ class _DinossaurPage extends State<DinosaurPage> {
                   Navigator.of(context).push(MaterialPageRoute(builder: (context) => ModelViewerPage(model: dinoType,)));
                 },
                 child: Container(
-                padding: EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed
+                padding: const EdgeInsets.fromLTRB(25, 5, 25, 35), // Add some padding if needed
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.5), // Black color with 25% opacity
                       spreadRadius: 5, // Spread radius
                       blurRadius: 10, // Blur radius
-                      offset: Offset(0, 0), // Changes position of shadow
+                      offset: const Offset(0, 0), // Changes position of shadow
                     ),
                   ],
                   shape: BoxShape.circle, // Circular shape

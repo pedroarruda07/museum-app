@@ -57,7 +57,7 @@ class _MyMap2Page extends State<Map2Page> {
       }
     });
 
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       //_setPopupShown(false); //for debug
       itemPopup(context);
     });
@@ -107,7 +107,7 @@ class _MyMap2Page extends State<Map2Page> {
                   print("Clicked Arrow 2");
                   Navigator.of(context).replace(
                     oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
+                    newRoute: MaterialPageRoute(builder: (context) => const DiscoverPage()),
                   );
                 },
                 child: Container(
@@ -141,7 +141,7 @@ class _MyMap2Page extends State<Map2Page> {
                   print("Clicked Arrow 1");
                   Navigator.of(context).replace(
                     oldRoute: ModalRoute.of(context)!,
-                    newRoute: MaterialPageRoute(builder: (context) => DiscoverPage()),
+                    newRoute: MaterialPageRoute(builder: (context) => const DiscoverPage()),
                   );
                 },
                 child: Container(
@@ -325,8 +325,8 @@ class _MyMap2Page extends State<Map2Page> {
               const SizedBox(width: 12.0),
               Showcase(
                   key: _sevenKey,
-                  onBarrierClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
-                  onTargetClick: () => Future.delayed(Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context);}),
+                  onBarrierClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context); }),
+                  onTargetClick: () => Future.delayed(const Duration(seconds: 1), () {_setPopupShown(false); itemPopup(context);}),
                   disposeOnTap: true,
                   description: 'Look for specific items and take a photo of them when you find them!',
                   descriptionAlignment: TextAlign.center,
@@ -363,8 +363,8 @@ class _MyMap2Page extends State<Map2Page> {
                     if(await _checkIfQuizDone()){
                       final SharedPreferences prefs = await SharedPreferences.getInstance();
                       int score = prefs.getInt('scoreQuiz2') ?? 0;
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score, color1: Color.fromARGB(255, 180, 175, 133),
-                          color2: Color.fromARGB(255, 86, 170, 212), color3: Color.fromARGB(255, 180, 175, 133))));
+                      Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizDonePage(page: "2", score: score, color1: const Color.fromARGB(255, 180, 175, 133),
+                          color2: const Color.fromARGB(255, 86, 170, 212), color3: const Color.fromARGB(255, 180, 175, 133))));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(builder: (context) => const QuizTwoPage()));
                     }
@@ -423,7 +423,7 @@ class _MyMap2Page extends State<Map2Page> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), // this right here
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
@@ -444,7 +444,7 @@ class _MyMap2Page extends State<Map2Page> {
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     Container(
                       decoration: BoxDecoration(
                         // Rounded corners
@@ -454,13 +454,13 @@ class _MyMap2Page extends State<Map2Page> {
                       clipBehavior: Clip.antiAlias, // Ensures the image is clipped to the border radius
                       child: Image.asset('assets/images/find_items/page2item.png', height: 100),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Text(
                       "Find the item in the picture and take a photo of it to earn 50 points!",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -476,7 +476,7 @@ class _MyMap2Page extends State<Map2Page> {
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ]),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white,
@@ -485,7 +485,7 @@ class _MyMap2Page extends State<Map2Page> {
                             // Put your code here for what should happen when OK is tapped
                             Navigator.of(context).pop();
                           },
-                          child: Text('OK'),
+                          child: const Text('OK'),
                         ),
                       ],
                     ),

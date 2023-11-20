@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/welcome_page.dart';
+import 'package:ipm_project/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => Cart()),
+    ], child: const MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

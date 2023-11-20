@@ -107,7 +107,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                   Navigator.of(context).replace(
                     oldRoute: ModalRoute.of(context)!,
                     newRoute:
-                        MaterialPageRoute(builder: (context) => Map2Page()),
+                        MaterialPageRoute(builder: (context) => const Map2Page()),
                   );
                 },
                 child: Container(
@@ -145,7 +145,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                       Navigator.of(context).replace(
                         oldRoute: ModalRoute.of(context)!,
                         newRoute:
-                            MaterialPageRoute(builder: (context) => Map2Page()),
+                            MaterialPageRoute(builder: (context) => const Map2Page()),
                       );
                     },
                     child: Container(
@@ -280,10 +280,10 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               const SizedBox(width: 12.0),
               Showcase(
                 key: _sevenKey,
-                onBarrierClick: () => Future.delayed(Duration(seconds: 1), () {
+                onBarrierClick: () => Future.delayed(const Duration(seconds: 1), () {
                   itemPopup(context);
                 }),
-                onTargetClick: () => Future.delayed(Duration(seconds: 1), () {
+                onTargetClick: () => Future.delayed(const Duration(seconds: 1), () {
                   itemPopup(context);
                 }),
                 disposeOnTap: true,
@@ -336,9 +336,9 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                           builder: (context) => QuizDonePage(
                                 page: "1",
                                 score: score,
-                                color1: Color.fromARGB(255, 180, 175, 133),
-                                color2: Color.fromARGB(255, 130, 172, 121),
-                                color3: Color.fromARGB(255, 180, 175, 133),
+                                color1: const Color.fromARGB(255, 180, 175, 133),
+                                color2: const Color.fromARGB(255, 130, 172, 121),
+                                color3: const Color.fromARGB(255, 180, 175, 133),
                               )));
                     } else {
                       Navigator.of(context).push(MaterialPageRoute(
@@ -401,7 +401,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), // this right here
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
@@ -424,7 +424,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     Container(
                       decoration: BoxDecoration(
                         // Rounded corners
@@ -438,13 +438,13 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                           'assets/images/find_items/page1find.png',
                           height: 100),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Text(
                       "Find the item in the picture and take a photo of it to earn 50 points!",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -460,7 +460,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ]),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -468,7 +468,7 @@ class _MyDiscoverPage extends State<DiscoverPage> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),

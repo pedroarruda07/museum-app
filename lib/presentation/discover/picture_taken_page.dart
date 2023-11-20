@@ -78,9 +78,9 @@ class PictureTakenPage extends StatelessWidget {
                     border: Border.all(color: Colors.black, width: 2),
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text(
+                  child: const Text(
                     "50",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 24,
                       color: Colors.black,

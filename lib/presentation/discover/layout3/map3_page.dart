@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ipm_project/presentation/discover/camera_page.dart';
-import 'package:ipm_project/presentation/discover/dinosaur_page.dart';
 import 'package:ipm_project/presentation/discover/exit_page.dart';
 import 'package:ipm_project/presentation/discover/game_page.dart';
 import 'package:ipm_project/presentation/discover/game_played_page.dart';
 import 'package:ipm_project/presentation/discover/layout1/discover_page.dart';
 import 'package:ipm_project/presentation/discover/layout2/map2_page.dart';
-import 'package:ipm_project/presentation/discover/layout2/quiz2_page.dart';
 import 'package:ipm_project/presentation/discover/layout3/quiz3_page.dart';
 import 'package:ipm_project/presentation/discover/picture_taken_page.dart';
 import 'package:ipm_project/presentation/discover/quiz_done_page.dart';
@@ -296,16 +294,7 @@ class _MyMap3Page extends State<Map3Page> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Stone 1");
-                  _setStoneChecked(1);
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                          builder: (context) =>
-                              const StonePage(picture: "emerald")))
-                      .then((_) {
-                    _checkStonesChecked();
-                    setState(() {
-                    });
-                  });
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "emerald")));
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -521,7 +510,7 @@ class _MyMap3Page extends State<Map3Page> {
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0)), // this right here
               child: Container(
-                padding: EdgeInsets.all(15.0),
+                padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     begin: Alignment.topLeft,
@@ -542,7 +531,7 @@ class _MyMap3Page extends State<Map3Page> {
                       style: TextStyle(
                           fontSize: 24.0, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     Container(
                       decoration: BoxDecoration(
                         // Rounded corners
@@ -557,13 +546,13 @@ class _MyMap3Page extends State<Map3Page> {
                           height: 100),
                     ),
                     // Your diamond-shaped image asset
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Text(
                       "Find the item in the picture and take a photo of it to earn 50 points!",
                       textAlign: TextAlign.center,
                       style: TextStyle(fontSize: 18.0),
                     ),
-                    SizedBox(height: 15.0),
+                    const SizedBox(height: 15.0),
                     const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -579,7 +568,7 @@ class _MyMap3Page extends State<Map3Page> {
                             style: TextStyle(fontSize: 18.0),
                           ),
                         ]),
-                    SizedBox(height: 20.0),
+                    const SizedBox(height: 20.0),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -590,7 +579,7 @@ class _MyMap3Page extends State<Map3Page> {
                         setState(() {
                         });
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 ),
@@ -603,6 +592,7 @@ class _MyMap3Page extends State<Map3Page> {
   }
 
   void _showExitPopup(BuildContext context) {
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -635,6 +625,7 @@ class _MyMap3Page extends State<Map3Page> {
                   (Route<dynamic> route) =>
                       route.isFirst, // Condition to remove all previous routes
                 );
+
               },
             ),
           ],

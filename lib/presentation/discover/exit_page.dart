@@ -7,7 +7,7 @@ class ExitPage extends StatelessWidget {
   final int score;
   final String discountCode = "125945572";
 
-  ExitPage({Key? key, required this.score}) : super(key: key);
+  const ExitPage({super.key, required this.score});
 
   Future<void> _resetScore() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -265,7 +265,7 @@ class ExitPage extends StatelessWidget {
       style: TextStyle(
         fontSize: size,
         fontWeight: FontWeight.bold,
-        color: Color.fromARGB(255, 196, 209, 214),
+        color: const Color.fromARGB(255, 196, 209, 214),
       ),
     );
   }

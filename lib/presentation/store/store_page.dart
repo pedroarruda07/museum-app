@@ -1,47 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ipm_project/providers/cart_provider.dart';
 import 'package:ipm_project/presentation/store/product_detail_page.dart';
+import 'package:ipm_project/presentation/store/check_cart_page.dart';
+import 'package:ipm_project/utils/dummy_helper.dart';
 
-import '../../data/product.dart';
 
 class StorePage extends StatelessWidget {
   const StorePage({super.key});
 
-  // Product Data
-  static final List<Product> products = [
-    Product(
-      name: 'Jurassic Park T. rex Tubbz in a Crate',
-      images: [
-        'assets/images/store_products/duck1.jpg',
-        'assets/images/store_products/duck2.jpg',
-        'assets/images/store_products/duck3.jpg',
-        'assets/images/store_products/duck4.jpg',
-        'assets/images/store_products/duck5.jpg'
-      ],
-      description:
-          "The creative team at Tubbz have brilliantly captured the Jurassic Park's T. rex and transformed it into this new hybrid dinosaur-duck to add to your collection - or to start one.\n\n"
-          "They've also managed to capture the mini giant in its own crate-style packaging - exclusively available at the Museum - for safe transit to its destination.\n\n",
-      price: 20.00,
-      reviews: ['Good product', 'Excellent quality'],
-    ),
-    Product(
-      name: 'Jurassic Park Lamp',
-      images: [
-        'assets/images/store_products/lamp1.jpg',
-        'assets/images/store_products/lamp2.jpg',
-        'assets/images/store_products/lamp3.jpg',
-        'assets/images/store_products/lamp4.jpg',
-        'assets/images/store_products/lamp5.jpg'
-      ],
-      description:
-          "A great gift for the ultimate Jurassic Park fan, this 3D square-shaped moulded lamp features the instantly recognisable logo.\n\n"
-          "It can either be charged via a USB cable or battery powered and will look right at home on a desktop, among a jungle of plants on a shelf, mounted on the wall in a bedroom - or garden shed.\n\n",
-      price: 20.00,
-      reviews: ['Good product', 'Excellent quality'],
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    int cartCount = Provider.of<Cart>(context).itemsInCart;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black87,
@@ -54,21 +25,127 @@ class StorePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Search Bar
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: 'Search products',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+            Row(
+              children: [
+                Expanded(
+                  child: // Search Bar
+                  TextFormField(
+                    decoration: InputDecoration(
+                      labelText: 'Search products',
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: 16),
+                FloatingActionButton(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.black87,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  onPressed: () {
+                    // Show filter options as a pop-up dialog
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Filters'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Price Range Slider
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Price Range'),
+                              ),
+                              // Placeholder for a price range slider
+                              // Replace this with an actual slider for price range selection
+                              // Example: RangeSlider(...),
+                              Slider(
+                                min: 0,
+                                max: 100,
+                                onChanged: (value) {
+                                  // Handle changes in price range selection
+                                },
+                                value: 50,
+                              ),
+                              const Divider(),
+                              // Filter Dropdown Menu
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Category'),
+                              ),
+                              // Placeholder for a dropdown menu for category selection
+                              // Replace this with an actual dropdown for category selection
+                              // Example: DropdownButton(...),
+                              DropdownButton<String>(
+                                onChanged: (String? newValue) {
+                                  // Handle changes in category selection
+                                },
+                                items: [
+                                  'Dinosaurs',
+                                  'Books',
+                                  'Toys & Games',
+                                  'Clothing & Accessories',
+                                  'Home & Stationery'
+                                ].map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                value: 'Dinosaurs', // Default value
+                              ),
+                              const Divider(),
+                              // Sort Dropdown Menu
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Sort By'),
+                              ),
+                              // Placeholder for a dropdown menu for sorting options
+                              // Replace this with an actual dropdown for sorting selection
+                              // Example: DropdownButton(...),
+                              DropdownButton<String>(
+                                onChanged: (String? newValue) {
+                                  // Handle changes in sorting selection
+                                },
+                                items: ['New', 'Popular', 'Relevant']
+                                    .map<DropdownMenuItem<String>>((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                value: 'New', // Default value
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Apply'),
+                              onPressed: () {
+                                // Apply filters logic
+                                Navigator.pop(context); // Close the dialog
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: const Icon(Icons.filter_list),
+                ),
+              ]
             ),
             const SizedBox(height: 20),
             // Real Store Items
@@ -80,15 +157,29 @@ class StorePage extends StatelessWidget {
                   crossAxisSpacing: 16,
                   childAspectRatio: 0.8,
                 ),
-                itemCount: products.length,
+                itemCount: DummyHelper.products.length,
                 itemBuilder: (context, index) {
-                  final product = products[index];
+                  final product = DummyHelper.products[index];
                   return GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => ProductDetailPage(product: product),
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) {
+                            return ProductDetailPage(product: product);
+                          },
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(1.0, 0.0);
+                            const end = Offset.zero;
+                            const curve = Curves.easeInOut;
+                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+                            return SlideTransition(
+                              position: offsetAnimation,
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 500),
                         ),
                       );
                     },
@@ -103,7 +194,7 @@ class StorePage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.asset(
                                 product.images[0], // Assuming the first image in the list represents the product
-                                fit: BoxFit.cover,
+                                fit: BoxFit.contain,
                               ),
                             ),
                           ),
@@ -139,6 +230,53 @@ class StorePage extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: Stack(
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: () {
+              // Navigate to the checkout page here
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartPage()), // Replace CheckoutPage with your actual checkout page widget
+              );
+            },
+            backgroundColor: Colors.black87,
+            child: const Icon(Icons.shopping_cart), // Shopping cart icon
+          ),
+          if (cartCount > 0) // Show the cart count only if it's greater than 0
+            Positioned(
+              right: 0,
+              top: 0,
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                constraints: const BoxConstraints(
+                  minWidth: 20,
+                  minHeight: 20,
+                ),
+                child: Center(
+                  child: Consumer<Cart>(
+                    builder: (context, cart, child) {
+                      int cartItemCount = cart.itemsInCart;
+                      return Text(
+                        '$cartItemCount',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat, // Positioning the FAB
     );
   }
 }
