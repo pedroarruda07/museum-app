@@ -45,11 +45,13 @@ dependencies:
   model_viewer_plus: ^1.6.1
   provider: ^6.1.1
   flutter_launcher_icons: ^0.13.1
+  table_calendar: ^3.0.2
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/dino-logo.png"
+
 
 
 dev_dependencies:
