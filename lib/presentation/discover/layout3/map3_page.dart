@@ -94,6 +94,8 @@ class _MyMap3Page extends State<Map3Page> {
     });
 
     _getGameShown().then((shown) {
+      //print(shown.toString());
+      //print(stonesChecked);
       if (!shown && stonesChecked) {
 
           Future.delayed(Duration.zero, () {
@@ -294,7 +296,12 @@ class _MyMap3Page extends State<Map3Page> {
               child: GestureDetector(
                 onTap: () {
                   print("Clicked Stone 1");
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "emerald")));
+                  _setStoneChecked(1);
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => const StonePage(picture: "emerald"))).then((_) {
+                    _checkStonesChecked();
+                    setState(() {
+                    });
+                  });
                 },
                 child: Container(
                   color: Colors.transparent,
@@ -436,6 +443,9 @@ class _MyMap3Page extends State<Map3Page> {
     bool bool1 = prefs.getBool('stone1') ?? false;
     bool bool2 = prefs.getBool('stone2') ?? false;
     bool bool3 = prefs.getBool('stone3') ?? false;
+    print(bool1.toString());
+    print(bool2.toString());
+    print(bool3.toString());
     setState(() {
       stonesChecked = bool1 && bool2 && bool3;
     });

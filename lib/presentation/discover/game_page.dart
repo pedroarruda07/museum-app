@@ -13,7 +13,7 @@ class _GamePageState extends State<GamePage> {
   double playerX = 0;
   List<FallingItem> items = [];
   int score = 0;
-  int timeLeft = 150;
+  int timeLeft = 100;
   Timer? gameTimer;
   double screenWidth = 0;
   double screenHeight = 0;
@@ -176,7 +176,7 @@ class _GamePageState extends State<GamePage> {
               if (item.type == 'good') {
                 score++; // Reward for catching good items
               } else {
-                if ((timeLeft - 5) < 0) {
+                if ((timeLeft - 5) <= 0) {
                   timeLeft = 0; // Penalize time for catching bad items
                   gameTimer?.cancel();
                   _showGameCompletionDialog();
@@ -307,7 +307,7 @@ class _GamePageState extends State<GamePage> {
             children: [
               SizedBox(height: 10),
               Text(
-                "You have 150 seconds to catch as many gemstones as possible!",
+                "You have 100 seconds to catch as many gemstones as possible!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
