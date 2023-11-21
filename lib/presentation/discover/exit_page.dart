@@ -190,7 +190,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildOutlinedText('Use it in our store or online store!', 20),
+                      _buildOutlinedText('Use it in our online store!', 20),
                       //_buildOutlinedText('Museum'),
                     ],
                   ),
@@ -198,7 +198,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildForegroundText('Use it in our store or online store!', 20),
+                      _buildForegroundText('Use it in our online store!', 20),
                       // _buildForegroundText('Museum'),
                     ],
                   ),
@@ -212,7 +212,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildOutlinedText("You can check the code at any time in the app's store", 12),
+                      _buildOutlinedText("You can use the code at any time when checking out", 13),
                       //_buildOutlinedText('Museum'),
                     ],
                   ),
@@ -220,7 +220,7 @@ class ExitPage extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildForegroundText("You can check the code at any time in the app's store", 12),
+                      _buildForegroundText("You can use the code at any time when checking out", 13),
                       // _buildForegroundText('Museum'),
                     ],
                   ),

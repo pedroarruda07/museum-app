@@ -13,6 +13,7 @@ class CheckoutPage extends StatefulWidget {
 
 class _CheckoutPageState extends State<CheckoutPage> {
   bool fastShipping = false;
+  bool discount = false;
   double fastShippingCost = 9.99;
 
 
@@ -21,6 +22,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     Map<Product, int> cartItems = Provider.of<Cart>(context).cart;
     double cartTotal = Provider.of<Cart>(context).cartTotal;
     double totalPrice = fastShipping ? cartTotal + fastShippingCost : cartTotal;
+    double totalPriceFinal = discount ? totalPrice * 0.95 : totalPrice;
 
     return Scaffold(
       appBar: AppBar(
@@ -81,6 +83,35 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 ],
               ),
               SizedBox(height: 20),
+              // Shipping options section
+              buildSectionTitle('Discount Code'),
+              buildHorizontalDivider(),
+              // Checkbox for fast or standard shipping
+              Row(
+                children: [
+                  Checkbox(
+                    value: discount, // Replace with your actual shipping selection logic
+                    onChanged: (newValue) {
+                      setState(() {
+                        discount = newValue ?? false;
+                      });
+                    },
+                    checkColor: Colors.white,
+
+                  ),
+                  Text('Use Discount Code: 125945572'),
+                  Spacer(), // This will push the text to the far right
+                  Text(
+                    '- ${'5.0%'}', // Replace with your set amount of money
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
               // Order details section
               buildSectionTitle('Order Details'),
               SizedBox(height: 10),
@@ -124,7 +155,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
                     ),
                   ),
                   Text(
-                    '\u{00A3}${totalPrice.toStringAsFixed(2)}',
+                    '\u{00A3}${totalPriceFinal.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,

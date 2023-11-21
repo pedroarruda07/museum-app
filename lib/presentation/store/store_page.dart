@@ -25,7 +25,6 @@ class StorePage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
