@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ipm_project/presentation/store/store_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/product.dart';
@@ -23,6 +24,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     double cartTotal = Provider.of<Cart>(context).cartTotal;
     double totalPrice = fastShipping ? cartTotal + fastShippingCost : cartTotal;
     double totalPriceFinal = discount ? totalPrice * 0.95 : totalPrice;
+    final cart = Provider.of<Cart>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -138,6 +140,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
               buildHorizontalDivider(),
               // Placeholder for payment information
               // Replace with your actual payment form fields
+              buildPlaceholderText('Email:', 'Placeholder'),
               buildPlaceholderText('Card Number:', 'Placeholder'),
               buildPlaceholderText('Expiration Date:', 'Placeholder'),
               buildPlaceholderText('CVV:','Placeholder'),
@@ -173,7 +176,30 @@ class _CheckoutPageState extends State<CheckoutPage> {
                   padding: EdgeInsets.symmetric(vertical: 16),
                 ),
                 onPressed: () {
-                  // Implement logic to place the order
+                  showDialog(
+                    barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Done!'),
+                          content: const Text(
+                              'Thank you for choosing our museum! '
+                                  '\n\nYou will soon receive information about your order in your email.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+
+                                cart.clearCart();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      });
                 },
                 child: Text('Place Order'),
               ),

@@ -29,6 +29,7 @@ class Cart extends ChangeNotifier {
 
   void clearCart() {
     cartMap.clear();
+    itemsInCart = 0;
     notifyListeners();
   }
 

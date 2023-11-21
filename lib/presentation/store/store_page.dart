@@ -47,6 +47,7 @@ class StorePage extends StatelessWidget {
                 ),
                 const SizedBox(width: 16),
                 FloatingActionButton(
+                  heroTag: null,
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.black87,
                   shape: RoundedRectangleBorder(
@@ -232,6 +233,7 @@ class StorePage extends StatelessWidget {
       floatingActionButton: Stack(
         children: <Widget>[
           FloatingActionButton(
+            heroTag: null,
             onPressed: () {
               // Navigate to the checkout page here
               Navigator.push(
