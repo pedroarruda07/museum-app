@@ -4,7 +4,24 @@ import '../welcome_page.dart';
 
 class TicketCheckoutPage extends StatelessWidget {
   final List<TicketInfo> tickets;
-  TicketCheckoutPage({super.key, required this.tickets});
+  final DateTime date;
+  TicketCheckoutPage({super.key, required this.tickets, required this.date});
+
+  // Predefined ticket prices
+  static const Map<String, double> ticketPrices = {
+    'Regular ( 6€ )': 6.0,
+    'Student ( 4€ )': 4.0,
+    'Family Pack ( 13.50€ )': 13.50,
+  };
+
+  // Method to calculate total price
+  double getTotalPrice() {
+    double totalPrice = 0.0;
+    for (var ticket in tickets) {
+      totalPrice += (ticketPrices[ticket.ticketType] ?? 0) * ticket.quantity;
+    }
+    return totalPrice;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +34,17 @@ class TicketCheckoutPage extends StatelessWidget {
         ),
       );
     }).toList();
+
+    // Add this to display the total price
+    List<Widget> totalPriceWidget = [
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(
+          'Total Price: €${getTotalPrice().toStringAsFixed(2)}',
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+      ),
+    ];
 
     return Scaffold(
         appBar: AppBar(
@@ -37,6 +65,13 @@ class TicketCheckoutPage extends StatelessWidget {
                         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       ...ticketWidgets,
+                      const SizedBox(height: 5),
+                      Text(
+                        'Selected Date: ${date.day}/${date.month}/${date.year}',
+                        style: const TextStyle(fontSize: 14),
+                      ),
+                      const SizedBox(height: 10),
+                      ...totalPriceWidget,
                       SizedBox(height: 20),
                       const Text(
                         'Enter your email:',
@@ -53,7 +88,7 @@ class TicketCheckoutPage extends StatelessWidget {
                               ),
                             ),
                           )),
-                      SizedBox(height: 50),
+                      SizedBox(height: 40),
                       const Text(
                         'Card Information',
                         style: TextStyle(
@@ -96,7 +131,7 @@ class TicketCheckoutPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 60),
+                      const SizedBox(height: 40),
                       Align(
                         alignment: Alignment.bottomCenter,
                         child:  ElevatedButton(
@@ -111,7 +146,7 @@ class TicketCheckoutPage extends StatelessWidget {
                                       title: const Text('Done!'),
                                       content: const Text(
                                           'Thank you for choosing our museum! '
-                                              '\n\nYou will soon receive information about your purchased tickets in your email.'),
+                                              '\n\nYou will soon receive the purchased tickets in your email.'),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
@@ -130,7 +165,7 @@ class TicketCheckoutPage extends StatelessWidget {
                               primary: Colors.black87
                             ),
                             child: const Text('PLACE ORDER', style: TextStyle(color: Colors.white),)),
-                      )
+                      ),
                     ]),
             ),
 

@@ -94,6 +94,17 @@ class _QRViewExampleState extends State<QRViewExample> {
                     ),
                   ),
                 ),
+                Positioned(
+                  top: 0,
+                  right: 0,// Adjust the position as per your requirement
+                  child: Container(width: 25, height: 25,
+                      child: GestureDetector(
+                        onTap: () {
+                            scanTicket();
+                          },
+                      )
+                  )
+                ),
               ],
             ),
           ),
@@ -123,14 +134,18 @@ class _QRViewExampleState extends State<QRViewExample> {
       //print(scanData.code);
       if (scanData.code == "StartMuseumVisit") {
         // Navigate to the desired page
-        setState(() {
-          _setTicketScanned();
-          Navigator.of(context).replace(
-            oldRoute: ModalRoute.of(context)!,
-            newRoute: MaterialPageRoute(builder: (context) => const DiscoverPage()),
-          );
-        });
+        scanTicket();
       }
+    });
+  }
+
+  void scanTicket() {
+    setState(() {
+      _setTicketScanned();
+      Navigator.of(context).replace(
+        oldRoute: ModalRoute.of(context)!,
+        newRoute: MaterialPageRoute(builder: (context) => const DiscoverPage()),
+      );
     });
   }
 

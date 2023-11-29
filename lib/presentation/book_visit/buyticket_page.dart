@@ -52,6 +52,10 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                 // Use this to determine which day is currently selected
                 return isSameDay(_selectedDate, day);
               },
+              enabledDayPredicate: (day) {
+                // Disable past days
+                return day.isAfter(DateTime.now().subtract(const Duration(days: 1)));
+              },
               firstDay: DateTime.utc(2023, 11, 1),
               lastDay: DateTime.utc(2030, 3, 14),
               availableCalendarFormats: const {CalendarFormat.month: 'Month'},
@@ -79,7 +83,7 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
             const SizedBox(height: 20),
             CustomBox(text: 'Student ( 4€ )', onCountChanged: updateTicketCount,),
             const SizedBox(height: 20),
-            CustomBox(text: 'Family Pack ( 13.50 € )', onCountChanged: updateTicketCount,),
+            CustomBox(text: 'Family Pack ( 13.50€ )', onCountChanged: updateTicketCount,),
             const SizedBox(height: 70),
             ElevatedButton(
             onPressed: () {
@@ -98,13 +102,41 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
   }
 
   void navigateToCheckout() {
-    List<TicketInfo> tickets = ticketCounts.entries.map((entry) =>
-        TicketInfo(entry.key, entry.value)).toList();
+    // Check if any tickets are selected
+    bool hasTickets = ticketCounts.values.any((count) => count > 0);
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => TicketCheckoutPage(tickets: tickets)),
-    );
+    if (hasTickets) {
+      // Navigate to checkout if tickets are selected
+      List<TicketInfo> tickets = ticketCounts.entries
+          .map((entry) => TicketInfo(entry.key, entry.value))
+          .toList();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TicketCheckoutPage(tickets: tickets, date: _selectedDate,),
+        ),
+      );
+    } else {
+      // Show alert if no tickets are selected
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('No Tickets Selected'),
+            content: const Text('Please select at least one ticket to proceed.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 
 }

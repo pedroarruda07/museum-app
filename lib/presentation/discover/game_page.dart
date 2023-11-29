@@ -41,6 +41,8 @@ class _GamePageState extends State<GamePage> {
     // Now it's safe to access MediaQuery and other inherited widgets
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
+
+    playerX = (screenWidth / 2) - 35;
   }
 
   void startGame() {
@@ -307,13 +309,14 @@ class _GamePageState extends State<GamePage> {
             children: [
               SizedBox(height: 10),
               Text(
-                "You have 100 seconds to catch as many gemstones as possible!",
+                "Catch as many gemstones as you can in 100 seconds by moving the cart in the bottom of the screen!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                     color: Colors.white),
               ),
+
               SizedBox(height: 30), // Spacing
               Text(
                 "But be careful with the stones and dirt as the time decreases when you catch them!",
