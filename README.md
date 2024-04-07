@@ -1,4 +1,5 @@
 # ipm_project
 
-A Flutter project.
+Frontend for an interactive museum-style app.
+Developed for a University project for the HMI class
 
